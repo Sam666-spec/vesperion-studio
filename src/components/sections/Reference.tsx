@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import styles from "./services/Reference.module.css";
+import { createPortal } from "react-dom";
 
 type Accent = "gold" | "green" | "cyan" | "violet" | "orange" | "blue";
 
@@ -273,101 +274,103 @@ export default function Reference() {
         </div>
       </div>
 
-      {openItem && (
-        <div
-          className={styles.modalOverlay}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Demo preview"
-        >
+      {openItem &&
+  createPortal(
+    <div
+      className={styles.modalOverlay}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Demo preview"
+    >
+      <button
+        className={styles.modalBackdrop}
+        onClick={closeModal}
+        aria-label="Close preview"
+        type="button"
+      />
+
+      <div className={styles.modal} data-accent={openItem.accent}>
+        <div className={styles.modalHead}>
+          <div className={styles.modalTitleRow}>
+            <span className={`${styles.cardBadge} ${styles[`badge_${openItem.accent}`]}`}>
+              {openItem.badge}
+            </span>
+            <h3 className={styles.modalTitle}>{openItem.title}</h3>
+          </div>
+
           <button
-            className={styles.modalBackdrop}
+            className={styles.modalClose}
             onClick={closeModal}
-            aria-label="Close preview"
+            aria-label="Close"
             type="button"
-          />
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
 
-          <div className={styles.modal} data-accent={openItem.accent}>
-            <div className={styles.modalHead}>
-              <div className={styles.modalTitleRow}>
-                <span className={`${styles.cardBadge} ${styles[`badge_${openItem.accent}`]}`}>
-                  {openItem.badge}
-                </span>
-                <h3 className={styles.modalTitle}>{openItem.title}</h3>
-              </div>
+        <div className={styles.viewer}>
+          <button
+            className={styles.viewerNav}
+            onClick={prevShot}
+            aria-label="Previous screen"
+            type="button"
+          >
+            ←
+          </button>
 
-              <button className={styles.modalClose} onClick={closeModal} aria-label="Close" type="button">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-
-            <div className={styles.viewer}>
-              <button
-                className={styles.viewerNav}
-                onClick={prevShot}
-                aria-label="Previous screen"
-                type="button"
-              >
-                <span aria-hidden="true">←</span>
-              </button>
-
-              <div className={styles.viewerFrame}>
-  <div
-    className={styles.frame}
-    onClick={() => window.open(openItem.shots[shotIndex].src, "_blank")}
-  >
-    <Image
-      key={openItem.shots[shotIndex]?.src}
-      src={openItem.shots[shotIndex].src}
-      alt={openItem.shots[shotIndex].alt}
-      width={openItem.shots[shotIndex].w}
-      height={openItem.shots[shotIndex].h}
-      className={`${styles.shot} ${
-        openItem.shots[shotIndex].alt.includes("hero") ? styles.shotHero : ""
-      }`}
-      unoptimized
-    />
-  </div>
-</div>
-
-              <button
-                className={styles.viewerNav}
-                onClick={nextShot}
-                aria-label="Next screen"
-                type="button"
-              >
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
-
-            <div className={styles.modalFoot}>
-              <div className={styles.counter}>
-                <span className={styles.counterNum}>{shotIndex + 1}</span>
-                <span className={styles.counterSep}>/</span>
-                <span className={styles.counterNum}>{openItem.shots.length}</span>
-              </div>
-
-              {openItem.cta?.href && openItem.cta.href !== "#" ? (
-                <a
-                  className={styles.detail}
-                  href={openItem.cta.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span>{openItem.cta.label}</span>
-                  <span className={styles.detailArrow} aria-hidden="true">
-                    →
-                  </span>
-                </a>
-              ) : (
-                <span className={styles.detailMuted}>
-                  <span>Prezentace demo projektů ve Figmě</span>
-                </span>
-              )}
+          <div className={styles.viewerFrame}>
+            <div
+              className={styles.frame}
+              onClick={() =>
+                window.open(openItem.shots[shotIndex].src, "_blank")
+              }
+            >
+              <Image
+                key={openItem.shots[shotIndex]?.src}
+                src={openItem.shots[shotIndex].src}
+                alt={openItem.shots[shotIndex].alt}
+                width={openItem.shots[shotIndex].w}
+                height={openItem.shots[shotIndex].h}
+                className={styles.shot}
+                unoptimized
+              />
             </div>
           </div>
+
+          <button
+            className={styles.viewerNav}
+            onClick={nextShot}
+            aria-label="Next screen"
+            type="button"
+          >
+            →
+          </button>
         </div>
-      )}
+
+        <div className={styles.modalFoot}>
+          <div className={styles.counter}>
+            {shotIndex + 1} / {openItem.shots.length}
+          </div>
+
+          {openItem.cta?.href && openItem.cta.href !== "#" ? (
+            <a
+              className={styles.detail}
+              href={openItem.cta.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {openItem.cta.label} →
+            </a>
+          ) : (
+            <span className={styles.detailMuted}>
+              Prezentace demo projektů ve Figmě
+            </span>
+          )}
+        </div>
+      </div>
+    </div>,
+    document.body
+  )}
 
       <div className="lx-divider" aria-hidden="true" />
     </section>

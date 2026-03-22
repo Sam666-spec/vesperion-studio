@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./LeadModal.module.css";
 
 type LeadModalProps = {
@@ -54,8 +55,7 @@ const SERVICE_MODAL_CONTENT: Record<
   },
   growth: {
     title: "Měření & CRO",
-    subtitle:
-      "Implementujeme analytiku a optimalizaci konverzí.",
+    subtitle: "Implementujeme analytiku a optimalizaci konverzí.",
     placeholder: "Používáte GA4 / jiné nástroje?",
   },
   pricingStart: {
@@ -96,6 +96,8 @@ export default function LeadModal({
   const firstInputRef = useRef<HTMLInputElement | null>(null);
   const lastActiveElRef = useRef<HTMLElement | null>(null);
 
+  const [mounted, setMounted] = useState(false);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -103,6 +105,10 @@ export default function LeadModal({
 
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const content = useMemo(() => {
     if (serviceId && serviceId in SERVICE_MODAL_CONTENT) {
@@ -124,29 +130,9 @@ export default function LeadModal({
     );
   }, [name, email, message, company]);
 
-  function resetHoverState() {
-    document.body.style.pointerEvents = "none";
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        document.body.style.pointerEvents = "";
-      });
-    });
-  }
-
   function handleClose() {
-  onClose();
-
-  // 🔥 Сброс hover через reflow
-  document.body.style.pointerEvents = "none";
-
-  // форсим перерисовку
-  document.body.offsetHeight;
-
-  requestAnimationFrame(() => {
-    document.body.style.pointerEvents = "";
-  });
-}
+    onClose();
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -272,9 +258,9 @@ export default function LeadModal({
     }
   }
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  return createPortal(
     <div
       className={styles.overlay}
       role="presentation"
@@ -314,10 +300,10 @@ export default function LeadModal({
             aria-label="Close modal"
           >
             <span className={styles.closeIcon}>×</span>
-          </button></header>
+          </button>
+        </header>
 
-        <div className={styles.content}>
-          <form className={styles.form} onSubmit={onSubmit}>
+        <div className={styles.content}><form className={styles.form} onSubmit={onSubmit}>
             <div className={styles.grid}>
               <label className={styles.field}>
                 <span className={styles.label}>Jméno</span>
@@ -419,6 +405,7 @@ export default function LeadModal({
           </aside>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

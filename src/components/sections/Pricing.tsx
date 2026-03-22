@@ -209,9 +209,16 @@ export default function Pricing() {
     <br />
     Pošlete krátký popis projektu a doporučíme nejlepší variantu.
     <div className={styles.pricingNoteBtn}>
-      <a className="lx-btn lx-btn--ghost lx-btn--hero-dark lx-shine" href="#kontakt">
-        Konzultovat projekt →
-      </a>
+     <button
+  type="button"
+  className="lx-btn lx-btn--ghost lx-btn--hero-dark lx-shine"
+  onClick={() => {
+    setServiceId(null);
+    setLeadOpen(true);
+  }}
+>
+  Konzultovat projekt →
+</button>
       <div className={styles.pricingMicro}>
   Odpovíme do 24 hodin. Obvykle mnohem dříve.
 </div>
