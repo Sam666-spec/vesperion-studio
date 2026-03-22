@@ -1,0 +1,2308 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/animations.css";
+
+/* ===== Base ===== */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html { scroll-behavior: smooth; }
+
+/* single scroll baseline */
+html {
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
+}
+
+/* selection */
+::selection {
+  background: rgba(245, 212, 122, 0.22);
+}
+
+/* ===== Background layers ===== */
+.lx-bg {
+  position: fixed;
+  inset: 0;
+  background: var(--grad-ink);
+  pointer-events: none;
+  z-index: -3;
+}
+
+.lx-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  z-index: -2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.lx-vignette {
+  position: fixed;
+  inset: -40px;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(900px 600px at 50% 12%, transparent 40%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+/* ===== Common “lux” primitives ===== */
+.lx-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* Section layout (global) */
+.lx-section {
+  padding-block: 120px;
+}
+
+.lx-section__head{
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* ← важно */
+
+  gap: 18px;
+  margin-bottom: 8px; /* расстояние до карточек */
+}
+
+.lx-section__text{
+  min-width: 0;
+  max-width: 100ch;
+
+  display: flex;
+  flex-direction: column; /* ← главное */
+  gap: 10px;
+  align-items: flex-start;
+}
+
+
+.lx-section__desc {
+  margin-top: 10px;
+
+  font-size: 18px;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  max-width: 100ch;
+}
+
+.lx-section__right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  white-space: nowrap; /* CTA не ломается */
+}
+
+.lx-section__body{
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+/* Mobile */
+@media (max-width: 720px){
+  .lx-section{ padding: 56px 0; }
+
+  .lx-section__head{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lx-section__right{
+    width: 100%;
+    justify-content: flex-start;
+    white-space: normal;
+    margin-top: 10px;
+  }
+
+  .lx-section__text{ max-width: 100%; }
+}
+
+.lx-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+}
+
+.lx-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.lx-muted {
+  color: var(--muted);
+}
+
+.lx-card {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.lx-card--soft {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+}
+
+.lx-gold{
+  background: var(--grad-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lx-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+
+  font-weight: 600;
+  user-select: none;
+
+  transform: translate3d(0,0,0);
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    background var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
+  will-change: transform;
+}
+.lx-btn:hover{
+  transform: translate3d(0,-3px,0);
+}
+
+.lx-btn:active{
+  transform: translate3d(0,-1px,0);
+}
+
+.lx-btn--gold{
+  position: relative;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: .02em;
+
+  background:
+    linear-gradient(135deg,
+      #f6d67a 0%,
+      #e7b94f 35%,
+      #c9952e 65%,
+      #f2cd74 100%
+    );
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  color: #1a1405;
+
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.35),
+    inset 0 -3px 6px rgba(120,80,10,.35);
+
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+
+.lx-btn--gold::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,.6) 0%,
+      rgba(255,255,255,.2) 35%,
+      transparent 60%
+    );
+
+  opacity:.35;
+}
+
+.lx-btn--gold:hover{
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 30px rgba(245,212,122,.35),
+    inset 0 2px 6px rgba(255,255,255,.45),
+    inset 0 -4px 8px rgba(120,80,10,.45);
+
+  filter: brightness(1.06);
+}
+
+.lx-btn--ghost{
+  background: rgba(10,10,12,0.55);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.88);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+}
+
+.lx-btn--ghost:hover{
+  transform: translateY(-3px);
+  background: rgba(8,8,10,0.70);
+  border-color: rgba(245,212,122,0.35);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 8px 18px rgba (0,0,0.35);
+}
+
+.lx-btn--ghost:active{
+  transform: translateY(-1px);
+}
+  
+/* HERO secondary — dark premium */
+.lx-btn--hero-dark{
+  position: relative;
+  padding: 12px 18px;
+  border-radius: 999px;
+
+  background: linear-gradient(180deg,
+    rgba(18,18,20,0.95),
+    rgba(10,10,12,0.95)
+  );
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  color: rgba(255,255,255,.88);
+  text-decoration: none;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  transition: all .2s ease;
+}
+
+/* subtle premium glow edge */
+.lx-btn--hero-dark::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+
+  background: radial-gradient(140px 60px at 50% -10%,
+    rgba(245,212,122,.18),
+    transparent 70%
+  );
+  opacity:.6;
+}
+
+/* hover */
+.lx-btn--hero-dark:hover{
+  transform: translateY(-2px);
+
+  border-color: rgba(245,212,122,.35);
+
+  box-shadow:
+    0 0 18px rgba(245,212,122,.12),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+  color:#fff;
+}
+
+/* active */
+.lx-btn--hero-dark:active{
+  transform: translateY(0);
+}
+
+/* focus */
+.lx-btn--hero-dark:focus-visible{
+  outline:none;
+  box-shadow:
+    0 0 0 3px rgba(245,212,122,.18),
+    0 18px 40px rgba(0,0,0,.65);
+}
+
+
+/* =========================
+   NAVBAR (header background + layout)
+   ========================= */
+
+.lx-header{
+  position: sticky;
+  top: 0;
+  z-index: 60;
+
+  /* чтобы псевдо-слой корректно жил внутри */
+  isolation: isolate;
+
+  /* базовый цвет (на всякий) */
+  background: rgba(5, 6, 8, 0.92);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* реальный “слой” фона, который перекрывает контент */
+.lx-header::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* максимально тёмно, чтобы не просвечивало */
+  background: rgba(5, 6, 8, 0.94);
+
+  /* стекло без засветов */
+  backdrop-filter: blur(14px) saturate(115%);
+  -webkit-backdrop-filter: blur(14px) saturate(115%);
+
+  /* лёгкая тень вниз, чтобы отделить от страницы */
+  box-shadow: 0 10px 30px rgba(0,0,0,.55);
+}
+
+/* когда проскроллено — ещё плотнее */
+.lx-header.is-scrolled::before{
+  background: rgba(5, 6, 8, 0.98);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  box-shadow: 0 14px 40px rgba(0,0,0,.65);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* главный контейнер: именно он разносит лого | нав | cta */
+.lx-header__inner{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 18px;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+/* brand */
+.lx-brand{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lx-brand__text {
+  font-weight: 600;
+  letter-spacing: .1em;
+  font-size: 14px;
+  color: rgba(255,255,255,.9);
+}
+
+.lx-brand_sub {
+  opacity: .5;
+  font-weight: 400;
+  margin-left: 6px;
+  letter-spacing: .06em;
+}
+
+.lx-brand__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  margin-right: 10px;
+
+  background: radial-gradient(circle at 30% 30%, #f5d47a, #b99637);
+
+  box-shadow: 0 0 12px rgba(245,212,122,.6);
+}
+
+
+
+/* nav */
+.lx-nav{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;   /* ✅ чтобы не "центровалось" и не уезжало */
+  justify-self: start;           /* ✅ ближе к бренду */
+  gap: 18px;
+  margin-left: 20px;              /* ✅ чуть вправо от VESPERION (подгони 0-14px) */
+}
+
+.lx-nav__link{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  padding: 8px 14px;
+  border-radius: 12px;
+
+  text-decoration: none;
+  font-size: 13px;
+  color: rgba(255,255,255,.72);
+
+  transition:
+    color .25s ease,
+    transform .25s ease,
+    background .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+
+
+/* underline base */
+.lx-nav__link::after{
+  content:"";
+  position:absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -5px;
+  height: 1px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(245,203,92,0) 0%,
+    rgba(245,203,92,.9) 50%,
+    rgba(245,203,92,0) 100%
+  );
+
+  opacity: 0;
+  transform: scaleX(.6);
+  transform-origin: center;
+
+  transition:
+    opacity .25s ease,
+    transform .35s cubic-bezier(.16,1,.3,1);
+}
+
+/* hover */
+.lx-nav__link:hover{
+  color: rgba(255,255,255,.95);
+  transform: translateY(-1px);
+}
+.lx-nav__link:hover::after{
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+
+/* ===== ACTIVE (SCROLL SPY) ===== */
+.lx-nav__link.is-active{
+  color: rgba(245,203,92,.95);
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+/* активное подчёркивание */
+.lx-nav__link.is-active::after{
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* CTA */
+.lx-header__cta{
+  justify-self: end;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ✅ у тебя была ошибка в селекторе: _ вместо __ */
+.lx-header__cta .lx-btn:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.lx-header__cta .lx-btn:active{
+  transform: translateY(-1px);
+}
+
+/* burger (mobile) */
+.lx-burger{
+  display: none;
+  justify-self: end;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid var(--line2);
+  background: rgba(255,255,255,.04);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+}
+.lx-burger span{
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(244,244,248,.82);
+  transition: transform .2s ease, opacity .2s ease;
+}
+.lx-burger.is-open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+.lx-burger.is-open span:nth-child(2){ opacity: 0; }
+.lx-burger.is-open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+
+/* scroll lock */
+body.lx-lock{ overflow: hidden; }
+
+/* Mobile rules */
+@media (max-width: 900px){
+  .lx-header__inner{
+    grid-template-columns: auto 1fr auto; /* brand | spacer | burger */
+  }
+  .lx-nav{ display: none; }
+  .lx-header__cta{ display: none; }
+  .lx-burger{ display: inline-flex; }
+}
+
+/* =========================
+   MOBILE MENU OVERLAY
+   ========================= */
+
+.lx-mnav{
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  /* IMPORTANT: hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity .22s ease, visibility .22s ease;
+}
+
+.lx-mnav.is-open{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.lx-mnav__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lx-mnav__panel{
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 74px;
+
+  border-radius: 18px;
+  border: 1px solid var(--line2);
+  background: rgba(14,14,18,.86);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  padding: 14px;
+  transform: translateY(-8px) scale(.98);
+  opacity: 0;
+  transition: transform .22s ease, opacity .22s ease;
+}
+
+.lx-mnav.is-open .lx-mnav__panel{
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.lx-mnav__top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.lx-mnav__title{
+  font-weight: 600;
+  letter-spacing: .08em;
+  font-size: 12px;
+  opacity: .9;
+}
+.lx-mnav__close{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid var(--line2);
+  background: rgba(255,255,255,.04);
+  color: rgba(244,244,248,.9);
+  cursor: pointer;
+}
+
+.lx-mnav__links{
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.lx-mnav__link{
+  display: block;
+  padding: 12px 12px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: rgba(244,244,248,.9);background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.lx-mnav__cta{
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* На десктопе оверлей вообще не нужен */
+@media (min-width: 901px){
+  .lx-mnav{ display: none !important; }
+}
+
+
+.lx-hero .lx-hero-inner {
+  max-width: 980px;
+}
+
+.lx-h1 {
+  font-family: var(--font-display);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  font-size: clamp(44px, 5.8vw, 86px);
+  margin: 14px 0 0;
+}
+
+.lx-lead {
+  color: var(--muted);
+  max-width: 720px;
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.75;
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .lx-hero {
+    padding-top: 86px;
+  }
+  .lx-h1 {
+    line-height: 1.02;
+    font-size: clamp(34px, 9vw, 52px);
+  }
+}
+
+/* ===== HERO LUX LAYOUT ===== */
+.lx-hero-grid{
+  display:grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.lx-hero-cta{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+  flex-wrap:wrap;
+}
+
+.lx-hero-badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+  align-items:center;
+}
+
+/* badge pill (studio dark glass) */
+.lx-hero-badges .lx-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:7px 12px;
+  border-radius:999px;
+
+  font-size:12px;
+  line-height:1;
+  letter-spacing:.01em;
+
+  color: rgba(255,255,255,.82);
+
+  background:
+    radial-gradient(140px 60px at 20% 25%, rgba(255,255,255,.06), transparent 62%),
+    linear-gradient(180deg, rgba(18,18,22,.72), rgba(12,12,16,.72));
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    background .18s ease,
+    color .18s ease;
+}
+
+.lx-hero-badges .lx-chip:hover{
+  transform: translateY(-1px);
+  color: rgba(255,255,255,.92);
+
+  border-color: rgba(255,255,255,.14);
+
+  background:
+    radial-gradient(160px 70px at 20% 25%, rgba(255,255,255,.075), transparent 62%),
+    linear-gradient(180deg, rgba(22,22,28,.76), rgba(12,12,16,.74));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.075);
+}
+
+.lx-hero-badges .lx-chip:active{
+  transform: translateY(0px);
+}
+
+/* dot inside chip */
+.lx-dot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+
+  display:inline-block;
+  flex:0 0 8px;
+
+  transform: translateY(-0.5px);
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.35),
+    0 0 10px rgba(0,0,0,.35);
+}
+
+/* states */
+.lx-dot--good{
+  /* deep emerald (not neon) */
+  background: rgba(31,143,99,.95);
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.35),
+    0 0 10px rgba(31,143,99,.28);
+}
+
+/* if you still need "gold" state somewhere, make it premium but muted */
+.lx-dot--gold{
+  background: rgba(200,170,95,.92);
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.35),
+    0 0 10px rgba(200,170,95,.22);
+}
+
+/* =========================
+   HERO CARD (Premium Glass)
+   ========================= */
+
+/* =========================================================
+   HERO RIGHT CARD — LUX BLACK GLASS (senior-grade)
+   (drop-in replacement for your current block)
+   ========================================================= */
+
+.lx-hero-card{
+  position: relative;
+  border-radius: 22px;
+  padding: 22px;
+  overflow: hidden;
+
+  /* base */
+  border: 1px solid rgba(255,255,255,.08);
+
+  /* premium black glass — NO gold lamp */
+  background:
+    /* subtle top-left sheen */
+    radial-gradient(900px 520px at 18% 12%, rgba(255,255,255,.055), transparent 58%),
+    /* subtle bottom-center depth */
+    radial-gradient(800px 520px at 55% 110%, rgba(0,0,0,.55), transparent 60%),
+    /* deep glass body */
+    linear-gradient(180deg, rgba(14,16,22,.86) 0%, rgba(8,9,12,.80) 100%);
+
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+
+/* inner highlight + edge */
+.lx-hero-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: 22px;
+  pointer-events:none;
+
+  /* expensive edge gradient */
+  background: linear-gradient(135deg,
+    rgba(255,255,255,.18),
+    rgba(255,255,255,.06) 35%,
+    rgba(255,255,255,.02) 60%,
+    rgba(255,255,255,.10)
+  );
+
+  /* show only border ring */
+  padding: 1px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: .55;
+}
+
+/* soft specular sweep (very subtle) */
+.lx-hero-card::after{
+  content:"";
+  position:absolute;
+  left:-35%;
+  top:-40%;
+  width: 70%;
+  height: 85%;
+  transform: rotate(18deg);
+  pointer-events:none;
+
+  background: radial-gradient(closest-side,
+    rgba(255,255,255,.08),
+    transparent 70%
+  );
+  opacity: .22;
+  filter: blur(6px);
+}
+
+.lx-hero-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* top row */
+.lx-hero-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 14px;
+}
+
+.lx-hero-card-title{
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .02em;
+  color: rgba(244,244,248,.92);
+}
+
+/* =========================
+   STATUS PILL (7–14 dní)
+   premium dark + muted green
+   ========================= */
+
+.lx-hero-card-pill{
+  --g: 72, 196, 133; /* muted premium green */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 14px 6px 28px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 550;
+  white-space: nowrap;
+
+  color: rgba(220,255,236,.92);
+
+  border: 1px solid rgba(var(--g), .22);
+
+  background:
+    radial-gradient(140px 70px at 20% 10%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, rgba(12,14,18,.78), rgba(9,10,13,.78));
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 0 1px rgba(var(--g), .06);
+
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+.lx-hero-card-pill::before{
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+
+  background: rgb(var(--g));
+
+  box-shadow:
+    0 0 0 3px rgba(var(--g), .14),
+    0 0 14px rgba(var(--g), .28);
+}
+
+/* subtle “breath”, not neon */
+.lx-hero-card-pill::after{
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  box-shadow: 0 0 10px rgba(var(--g), .25);
+  opacity: 0;
+  animation: lx-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes lx-pulse{
+  0%, 100% { opacity: 0; transform: translateY(-50%) scale(1); }
+  50% { opacity: .45; transform: translateY(-50%) scale(1.22); }
+}
+
+.lx-hero-card-pill:hover{transform: translateY(-1px);
+  border-color: rgba(var(--g), .38);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 0 0 1px rgba(var(--g), .10);
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .lx-hero-card,
+  .lx-hero-card *{
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* =========================
+   METRICS GRID
+   ========================= */
+
+.lx-hero-metrics{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.lx-metric{
+  border-radius: 16px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.085);
+
+  background:
+    radial-gradient(160px 80px at 30% 20%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.lx-metric-kpi{
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.05;
+  color: rgba(255,255,255,.95);
+}
+
+.lx-metric-label{
+  margin-top: 3px;
+  font-size: 12px;
+  color: rgba(244,244,248,.72);
+}
+
+/* =========================
+   TECH STACK CHIPS (only inside hero card)
+   ========================= */
+
+.lx-hero-stack{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  margin-top: 6px;
+  margin-bottom: 14px;
+}
+
+.lx-hero-card .lx-hero-stack .lx-chip{
+  position: relative;
+  padding: 7px 14px;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color: rgba(244,244,248,.90);
+
+  background:
+    radial-gradient(140px 70px at 35% 10%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, rgba(18,22,30,.82), rgba(10,12,18,.82));
+
+  border: 1px solid rgba(255,255,255,.12);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 10px 22px rgba(0,0,0,.22);
+
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+/* тонкая рамка у чипов */
+.lx-hero-card .lx-hero-stack .lx-chip::before{
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    rgba(245,212,122,.28),
+    rgba(255,255,255,.10),
+    rgba(245,212,122,.14)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* первые чипы чуть “сильнее” */
+.lx-hero-card .lx-hero-stack .lx-chip:nth-child(-n+6){
+  border-color: rgba(245,212,122,.20);
+  background:
+    radial-gradient(160px 80px at 35% 10%, rgba(245,212,122,.10), transparent 60%),
+    linear-gradient(180deg, rgba(18,22,30,.78), rgba(10,12,18,.78));
+}
+
+.lx-hero-card .lx-hero-stack .lx-chip:hover{
+  transform: translateY(-2px);
+  border-color: rgba(245,212,122,.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 16px 30px rgba(0,0,0,.32),
+    0 0 18px rgba(245,212,122,.10);
+}
+
+/* =========================
+   HERO TOP CHIP (Premium web / UX/UI / výkon / SEO)
+   ========================= */
+
+/* базовый чип (если используешь и в других местах — ок) */
+.lx-chip{
+  display: inline-flex;
+  align-items: center;   /* <-- ключевое */
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  line-height: 1;        /* <-- ключевое */
+  color: rgba(255,255,255,.78);
+
+  background: linear-gradient(180deg,
+    rgba(255,255,255,.06),
+    rgba(255,255,255,.02)
+  );
+
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.lx-chip:hover{
+  transform: translateY(-1px);
+  border-color: rgba(245,212,122,.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+
+/* конкретно хиро-чип */
+.lx-chip.lx-chip-hero{
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  gap: 14px;
+
+  padding: 8px 18px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,.72);
+
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border: 1px solid rgba(245,212,122,.25);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+/* hover */
+.lx-chip.lx-chip-hero:hover{
+  border-color: rgba(245,212,122,.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* акцентный текст (Premium web) — КЛЮЧЕВО для фикса "упавшего" первого кружка */
+.lx-chip-hero-accent{
+  display: inline-flex;     /* ключ */
+  align-items: center;      /* ключ */
+  line-height: 1;           /* ключ */
+
+  color: rgba(245,212,122,.95);
+  text-shadow: 0 0 14px rgba(245,212,122,.25);
+}
+
+/* =========================
+   SEPARATOR DOT (base)
+   ========================= */
+.lx-sep{
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 0 12px;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.22);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.06);
+
+  vertical-align: middle; /* важно */
+  flex: 0 0 auto;         /* важно */
+  transform: none;
+}
+
+/* separator dot inside hero chip (premium gold) */
+.lx-chip-hero .lx-sep{
+  width: 4px;
+  height: 4px;
+  margin: 0 12px;
+
+  background: rgba(245,212,122,.65);
+  box-shadow: 0 0 0 4px rgba(245,212,122,.08);
+
+  vertical-align: middle;
+}
+
+
+/* =========================
+   CTA area
+   ========================= */
+
+.lx-hero-card-btn{
+  display:flex;
+  justify-content:flex-start;
+}
+
+.lx-hero-card-btn .lx-btn{
+  width: 100%;
+  justify-content: center;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 900px){
+  .lx-hero-metrics{ grid-template-columns: 1fr; }
+
+  .lx-hero-grid{
+    grid-template-columns: 1fr !important;
+  }
+
+  .lx-hero-card{
+    justify-self: center;
+    width: min(100%, 420px);
+    margin-inline: auto;
+    transform: none !important;
+  }
+}
+
+
+
+.lx-accent {
+  background: linear-gradient(
+    135deg,
+    #f8e7b5 0%,
+    #f5d47a 30%,
+    #d4a63f 55%,
+    #b8841d 75%,
+    #f5d47a 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 14px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,0.82);
+
+  background: rgba(10,10,14,0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04);
+    
+  transition: border-color .2s ease, color .2s ease;
+}
+
+/* gold dot */
+.lx-eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  background: #f5d47a;
+ 
+}
+
+/* subtle hover (optional but premium) */
+.lx-eyebrow:hover {
+  border-color: rgba(245, 212, 122, 0.22);
+  background: rgba(12, 12, 16, 0.68);
+}
+
+/* ===============================
+   GOLD NEON DIVIDER (Hero → Services)
+   =============================== */
+/* ===== LUX NEON DIVIDER ===== */
+
+.lx-divider {
+  position: relative;
+  width: min(900px, 88%);
+  height: 1px;
+  margin: 80px auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 203, 92, 0.9),
+    transparent
+  );
+  opacity: 0.9;
+}
+
+/* мягкое свечение */
+.lx-divider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: blur(6px);
+  opacity: 0.6;
+}
+
+/* центральная точка */
+.lx-divider::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(245, 203, 92, 1);
+  box-shadow:
+    0 0 8px rgba(245, 203, 92, 0.9),
+    0 0 18px rgba(245, 203, 92, 0.6);
+}
+
+/* ===== Process section: bigger subtitle under badge ===== */
+#proces .lx-section__desc{
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 130ch;                  /* чтобы текст выглядел "дороже" и не растекался */
+  color: rgba(255,255,255,0.78);
+  margin-top: 5px;                 /* чуть ниже бейджа */
+  margin-bottom: 8px;              /* ближе к карточкам */
+}
+
+.lx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 700;
+
+  color: rgba(245, 203, 92, 0.92);
+  border: 1px solid rgba(245, 203, 92, 0.30);
+
+  background: linear-gradient(
+    135deg,
+    rgba(245, 203, 92, 0.18),
+    rgba(245, 203, 92, 0.06)
+  );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.10);
+
+  margin-bottom: 30px;
+}
+.lx-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+/* слой видео */
+
+.lx-hero__video{
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  z-index: 0;
+
+  /* Цветокоррекция — чуть мягче */
+  filter:
+    brightness(.92)
+    contrast(1.04)
+    saturate(.84);
+
+  /* Чтобы не было микро-щелей по краям */
+  transform: scale(1.02);
+}
+
+.lx-hero__overlay{
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background:
+
+    /* локальная защита текста слева */
+    radial-gradient(
+      900px 560px at 30% 42%,
+      rgba(0,0,0,.36),
+      transparent 62%
+    ),
+
+    /* мягкая виньетка по краям */
+    radial-gradient(
+      1400px 900px at 50% 50%,
+      transparent 60%,
+      rgba(0,0,0,.28) 100%
+    ),
+
+    /* слева темнее, справа легче */
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.52) 0%,
+      rgba(0,0,0,.36) 34%,
+      rgba(0,0,0,.20) 62%,
+      rgba(0,0,0,.10) 100%
+    ),
+
+    /* cinematic затемнение сверху/снизу */
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.28) 0%,
+      rgba(0,0,0,.14) 18%,
+      rgba(0,0,0,.06) 42%,
+      rgba(0,0,0,.18) 100%
+    );
+}
+
+/* весь контент поверх */
+.lx-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.lx-hero{
+  min-height: calc(100vh + 1px);
+}
+
+.lx-divider--hero{
+  position: absolute;
+  left: 50%;
+  bottom: -77px;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* HERO должен быть "один экран", а не lx-section с 120px снизу */
+.lx-hero{
+  position: relative;
+  overflow: hidden;
+
+  /* лучше чем 100vh на некоторых системах */
+  min-height: 100svh;
+
+  /* убираем секционный padding снизу */
+  padding-bottom: 0;
+
+  /* верх под navbar */
+  padding-top: 120px;
+}
+
+/* Мобилка */
+@media (max-width: 900px){
+  .lx-hero{
+    padding-top: 86px;
+  }
+}
+
+/* remove dark shadow from stack chips inside hero card */
+.lx-hero-card .lx-chip{
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+html, body{
+  background:#000;
+}
+body{
+  margin:0;
+}
+
+/* Next.js (на всякий) */
+#__next{
+  background:#000;
+  min-height:100vh;
+}
+
+/* =========================
+   PROCESS SECTION
+   ========================= */
+
+
+.lx-section--process{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: 2;
+
+  /* фон */
+  background-image: url("/process-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* базовая тёмная подложка */
+  background-color: #050608;
+}
+
+/* затемнение и атмосфера */
+.lx-section--process::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+
+  background:
+
+    /* лёгкий свет сверху */
+    radial-gradient(
+      900px 420px at 50% -10%,
+      rgba(255,255,255,0.025),
+      transparent 70%
+    ),
+
+    /* золотой акцент — мягче */
+    radial-gradient(
+      700px 320px at 30% 10%,
+      rgba(245,203,92,0.045),
+      transparent 75%
+    ),
+
+    /* центр — чуть высветляем фокус */
+    radial-gradient(
+      600px 280px at 50% 45%,
+      rgba(255,255,255,0.02),
+      transparent 70%
+    ),
+
+    /* низ для перехода */
+    radial-gradient(
+      900px 400px at 50% 100%,
+      rgba(0,0,0,.14),
+      transparent 70%
+    ),
+
+    /* базовое затемнение — ОСЛАБЛЕНО */
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.12) 0%,
+      rgba(0,0,0,.22) 100%
+    );
+}
+
+/* контент поверх */
+.lx-section--process > .lx-container{
+  position:relative;
+  z-index:2;
+}
+
+/* divider */
+
+.lx-section--process .lx-divider{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-195px;
+  z-index:5;
+  pointer-events:none;
+}
+
+/* mobile fix */
+
+@media (max-width:768px){
+  .lx-section--process .lx-divider{
+    bottom:-133px;
+  }
+}
+
+
+/* контент поверх */
+.lx-section--services{
+  background-image: url("/services-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.lx-section--services::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+
+  background:
+    radial-gradient(
+      900px 500px at 35% 35%,
+      rgba(0,0,0,.26),
+      transparent 67%
+    ),
+
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.34) 0%,
+      rgba(0,0,0,.52) 100%
+    );
+}
+
+.lx-section--services > .lx-container{
+  position: relative;
+  z-index: 2;
+}
+
+/* divider */
+
+.lx-section--services .lx-divider{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-195px;
+  z-index:5;
+  pointer-events:none;
+}
+
+@media (max-width: 768px){
+  .lx-section--services .lx-divider{
+    bottom:-133px;
+  }
+}
+
+
+/* =========================
+   REFERENCE SECTION
+   ========================= */
+
+.lx-section--reference{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  z-index:2;
+
+  background:#050608;
+
+  /* фон */
+  background-image:url("/reference-bg.webp");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  /* место под divider */
+  padding-bottom:260px;
+}
+
+
+/* =========================
+   OVERLAY
+   ========================= */
+
+.lx-section--reference::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+
+  background:
+
+    /* затемнение под текст слева */
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.50) 0%,
+      rgba(0,0,0,.28) 42%,
+      transparent 74%
+    ),
+
+    /* мягкий свет сверху */
+    radial-gradient(
+      1000px 460px at 50% -10%,
+      rgba(255,255,255,.020),
+      transparent 74%
+    ),
+
+    /* слабый золотой glow */
+    radial-gradient(
+      800px 340px at 30% 10%,
+      rgba(245,203,92,.045),
+      transparent 76%
+    ),
+
+    /* общий контраст секции */
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.34) 0%,
+      rgba(0,0,0,.56) 100%
+    );
+}
+
+
+/* =========================
+   EDGE VIGNETTE
+   ========================= */
+
+.lx-section--reference::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      1200px 760px at 50% 50%,
+      transparent 58%,
+      rgba(0,0,0,.20) 100%
+    );
+}
+
+
+/* =========================
+   CONTENT ABOVE BACKGROUND
+   ========================= */
+
+.lx-section--reference > .lx-container{
+  position:relative;
+  z-index:2;
+}
+
+
+/* =========================
+   DIVIDER
+   ========================= */
+
+.lx-section--reference .lx-divider{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-75px;
+  z-index:3;
+  pointer-events:none;
+}
+
+/* =========================
+   PRICING — COSMIC GOLD PLANET
+   ========================= */
+
+/* =========================
+   PRICING — COSMIC GOLD PLANET
+   ========================= */
+
+.lx-section--pricing{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:#000;
+  z-index:4;
+
+  background-image:url("/pricing-cosmic-gold-planet.webp");
+  background-size:cover;
+  background-position:left center;
+  background-repeat:no-repeat;
+}
+
+
+/* =========================
+   OVERLAY / CONTRAST FOR UI
+   ========================= */
+
+.lx-section--pricing::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+
+  background:
+    /* затемнение справа под карточки */
+    linear-gradient(
+      to right,
+      rgba(0,0,0,.18) 0%,
+      rgba(0,0,0,.42) 34%,
+      rgba(0,0,0,.70) 58%,
+      rgba(0,0,0,.88) 78%,
+      rgba(0,0,0,.96) 100%
+    ),
+
+    /* мягкий верхний свет */
+    radial-gradient(
+      900px 420px at 22% -8%,
+      rgba(255,255,255,.045),
+      transparent 72%
+    ),
+
+    /* лёгкий золотой halo от планеты */
+    radial-gradient(
+      1000px 520px at 16% 46%,
+      rgba(245,203,92,.18),
+      transparent 72%
+    );
+}
+
+
+/* =========================
+   DEPTH / EDGE VIGNETTE
+   ========================= */
+
+.lx-section--pricing::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      1400px 820px at 50% 50%,
+      transparent 52%,
+      rgba(0,0,0,.26) 100%
+    );
+}
+
+
+/* =========================
+   CONTENT ABOVE BACKGROUND
+   ========================= */
+
+.lx-section--pricing > .lx-container{
+  position:relative;
+  z-index:2;
+}
+
+
+/* =========================
+   SECTION DIVIDER
+   ========================= */
+
+.lx-section--pricing .lx-divider{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-76px;
+  z-index:3;
+  pointer-events:none;
+}
+
+
+/* =========================
+   OPTIONAL: MOBILE TUNE
+   ========================= */
+
+@media (max-width: 900px){
+  .lx-section--pricing{
+    background-position:22% center;
+  }
+
+  .lx-section--pricing::before{
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,.28) 0%,
+        rgba(0,0,0,.54) 36%,
+        rgba(0,0,0,.82) 68%,
+        rgba(0,0,0,.95) 100%
+      ),
+      radial-gradient(
+        760px 360px at 18% 14%,
+        rgba(245,203,92,.14),
+        transparent 72%
+      );
+  }
+}
+
+/* =========================
+   FAQ SECTION — CLEAN CINEMATIC BG
+   ========================= */
+.lx-section--faq{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: 2;
+
+  padding-bottom: 140px;
+
+  background-image: url("/faq-bg.webp");
+  background-size: cover;
+  background-position: center 58%;
+  background-repeat: no-repeat;
+}
+
+/* dark cinematic overlay — balanced */
+
+.lx-section--faq::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.68) 0%,
+      rgba(0,0,0,.60) 28%,
+      rgba(0,0,0,.64) 62%,
+      rgba(0,0,0,.74) 100%
+    );
+}
+
+/* subtle gold atmosphere */
+
+.lx-section--faq::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      520px 220px at 50% 86%,
+      rgba(212,175,55,.038),
+      transparent 74%
+    ),
+    radial-gradient(
+      380px 160px at 50% 18%,
+      rgba(212,175,55,.018),
+      transparent 80%
+    );
+
+  mix-blend-mode: screen;
+}
+
+/* content layer */
+
+.lx-section--faq > .lx-container{
+  position:relative;
+  z-index:2;
+}
+
+/* divider */
+
+.lx-section--faq .lx-divider{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-75px;
+  z-index:3;
+  pointer-events:none;
+}
+
+/* =========================
+   CONTACT — CINEMATIC CITY BG
+   ========================= */
+.lx-section--contact{
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+  margin-bottom: 20px;
+  z-index: 4;
+
+  background-image: url("/contact-bg.webp");
+  background-size: cover;
+  background-position: center 42%;
+  background-repeat: no-repeat;
+}
+
+/* основной cinematic overlay — softer and cleaner */
+.lx-section--contact::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.68) 0%,
+      rgba(0,0,0,.60) 22%,
+      rgba(0,0,0,.58) 44%,
+      rgba(0,0,0,.66) 68%,
+      rgba(0,0,0,.78) 100%
+    ),
+    radial-gradient(
+      820px 280px at 50% 13%,
+      rgba(0,0,0,.18),
+      transparent 74%
+    ),
+    linear-gradient(
+      to right,
+      rgba(0,0,0,.10) 0%,
+      rgba(0,0,0,0) 18%,
+      rgba(0,0,0,0) 82%,
+      rgba(0,0,0,.10) 100%
+    );
+}
+
+/* мягкая атмосфера */
+.lx-section--contact::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      700px 240px at 50% 12%,
+      rgba(212,175,55,.026),
+      transparent 74%
+    ),
+    radial-gradient(
+      560px 220px at 50% 86%,
+      rgba(212,175,55,.020),
+      transparent 76%
+    ),
+    radial-gradient(
+      420px 180px at 18% 55%,
+      rgba(255,255,255,.012),
+      transparent 78%
+    ),
+    radial-gradient(
+      420px 180px at 82% 55%,
+      rgba(255,255,255,.012),
+      transparent 78%
+    );
+
+  opacity:.92;
+}
+
+/* контент выше фона */
+.lx-section--contact > .lx-container{
+  position: relative;
+  z-index: 2;
+}
+
+/* divider */
+.lx-section--contact .lx-divider{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-81px;
+  z-index:3;
+  pointer-events:none;
+}
+/* =========================
+   LEGAL PAGES
+   ========================= */
+
+.lx-legal{
+  position: relative;
+  min-height: 100vh;
+  padding: 120px 0 80px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #000;
+}
+
+.lx-legal::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+
+  background-repeat:no-repeat;
+  background-image:
+    radial-gradient(2px 2px at 8% 16%, rgba(255,255,255,.26), transparent 65%),
+    radial-gradient(2px 2px at 18% 74%, rgba(255,255,255,.20), transparent 65%),
+    radial-gradient(2px 2px at 29% 34%, rgba(255,255,255,.24), transparent 65%),
+    radial-gradient(2px 2px at 39% 84%, rgba(255,255,255,.18), transparent 65%),
+    radial-gradient(2px 2px at 48% 14%, rgba(255,255,255,.24), transparent 65%),
+    radial-gradient(2px 2px at 58% 62%, rgba(255,255,255,.21), transparent 65%),
+    radial-gradient(2px 2px at 68% 38%, rgba(255,255,255,.24), transparent 65%),
+    radial-gradient(2px 2px at 79% 82%, rgba(255,255,255,.17), transparent 65%),
+    radial-gradient(2px 2px at 88% 22%, rgba(255,255,255,.23), transparent 65%),
+    radial-gradient(2px 2px at 94% 58%, rgba(255,255,255,.18), transparent 65%),
+
+    radial-gradient(3px 3px at 21% 14%, rgba(255,255,255,.10), transparent 70%),
+    radial-gradient(3px 3px at 63% 19%, rgba(255,255,255,.09), transparent 70%),
+    radial-gradient(3px 3px at 84% 74%, rgba(255,255,255,.09), transparent 70%);
+
+  opacity: .72;
+}
+
+.lx-legal::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+
+  background:
+    radial-gradient(900px 300px at 50% 0%, rgba(245,203,92,.05), transparent 60%),
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.10) 0%,
+      rgba(0,0,0,.32) 45%,
+      rgba(0,0,0,.56) 100%
+    );
+}
+
+.lx-legal__container{
+  position: relative;
+  z-index: 2;
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.lx-legal__hero{
+  margin-bottom: 28px;
+}
+
+.lx-legal__eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 12px;
+  border-radius:999px;
+  margin-bottom:18px;
+
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-weight:700;
+
+  color: rgba(245,203,92,.92);
+  border:1px solid rgba(245,203,92,.26);
+  background: linear-gradient(
+    135deg,
+    rgba(245,203,92,.15),
+    rgba(245,203,92,.05)
+  );
+}
+
+.lx-legal__title{
+  margin:0 0 12px 0;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -.03em;
+  color: rgba(255,255,255,.96);
+}
+
+.lx-legal__lead{
+  margin:0;
+  max-width: 62ch;
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255,255,255,.62);
+}
+
+.lx-legal__card{
+  border-radius: 24px;
+  padding: 28px 28px 26px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(12,12,14,.38);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.lx-legal__section + .lx-legal__section{
+  margin-top: 26px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.lx-legal__h2{
+  margin:0 0 10px 0;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -.02em;
+  color: rgba(255,255,255,.92);
+}
+
+.lx-legal__text{
+  margin:0;
+  font-size: 15px;
+  line-height: 1.85;
+  color: rgba(255,255,255,.68);
+}
+
+.lx-legal__footer{
+  margin-top: 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.lx-legal__back{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 16px;
+  border-radius:12px;
+  text-decoration:none;
+
+  color: rgba(255,255,255,.86);
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    color .2s ease;
+}
+
+.lx-legal__back:hover{
+  transform: translateY(-2px);
+  border-color: rgba(245,203,92,.28);
+  color: rgba(245,203,92,.95);
+}
+
+.lx-legal__meta{
+  font-size: 13px;
+  color: rgba(255,255,255,.42);
+}
+
+@media (max-width: 640px){
+  .lx-legal{
+    padding: 100px 0 56px;
+  }
+
+  .lx-legal__container{
+    padding: 0 18px;
+  }
+
+  .lx-legal__card{
+    padding: 22px 18px 20px;
+    border-radius: 20px;
+  }
+}
+
+.menu-item:hover{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.08);
+}

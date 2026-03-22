@@ -1,0 +1,85 @@
+
+/* ---- Shimmer line (for buttons/cards etc) ---- */
+.lx-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.lx-shine::after {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 212, 122, 0.22),
+    transparent
+  );
+  transform: translateX(-70%) skewX(-12deg);
+  animation: lxShimmer 2.8s var(--ease-inout, cubic-bezier(.65,0,.35,1)) infinite;
+  pointer-events: none;
+}
+
+/* ---- Gentle floating (for hero card / badges etc) ---- */
+.lx-float {
+  animation: lxFloat 6s var(--ease-inout, cubic-bezier(.65,0,.35,1)) infinite;
+  will-change: transform;
+}
+
+/* Optional: hover lift (nice “senior lux” feel) */
+.lx-hoverlift {
+  transition: transform .25s var(--ease-out, cubic-bezier(.16,1,.3,1)),
+              box-shadow .25s var(--ease-out, cubic-bezier(.16,1,.3,1));
+}
+.lx-hoverlift:hover {
+  transform: translateY(-4px);
+}
+
+/* ===========================
+   KEYFRAMES
+   =========================== */
+@keyframes lxFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    filter: blur(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes lxFadeIn {
+  from { opacity: 0; filter: blur(10px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+@keyframes lxShimmer {
+  0%   { transform: translateX(-70%) skewX(-12deg); opacity: 0; }
+  10%  { opacity: .35; }
+  60%  { opacity: .08; }
+  100% { transform: translateX(170%) skewX(-12deg); opacity: 0; }
+}
+
+@keyframes lxFloat {
+  0%, 100% { transform: translate3d(0, 8px, 0); }
+  50%      { transform: translate3d(0, -10px, 0); }
+}
+
+/* ===========================
+   ACCESSIBILITY: Reduced motion
+   =========================== */
+@media (prefers-reduced-motion: reduce) {
+  .lx-anim {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .lx-shine::after { display: none !important; }
+  .lx-float { animation: none !important; }
+  .lx-hoverlift { transition: none !important; }
+}

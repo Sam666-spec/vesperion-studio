@@ -1,0 +1,449 @@
+
+/* =========================
+   Layout
+   ========================= */
+
+.wrap{
+  position: relative;
+}
+
+/* Featured сверху на всю ширину */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.featuredWrap{
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 980px){
+  .grid{ grid-template-columns: 1fr; gap: 14px; }
+  .featuredWrap{ grid-column: auto; }
+}
+
+/* тонкая линия под сеткой (без золота) */
+.subline{
+  margin-top: 18px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,0.08),
+    transparent
+  );
+  opacity: .7;
+}
+
+/* =========================
+   CARD — LUX (black)
+   ========================= */
+
+
+
+.iconPill{
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(10,10,14,0.62);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 10px 30px rgba(0,0,0,0.50);
+
+  color: rgba(255,255,255,0.92);
+}
+
+.titleRow{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.title{
+  margin: 0;
+  font-weight: 720;
+  letter-spacing: -0.012em;
+  font-size: 16px;
+  line-height: 1.18;
+  color: rgba(255,255,255,0.92);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.desc{
+  margin: 8px 0 0;
+  color: rgba(255,255,255,0.62);
+  font-size: 13px;
+  line-height: 1.48;
+}
+
+/* Badge: только у featured */
+.badge{
+  flex: 0 0 auto;
+  font-size: 11px;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  color: rgba(12,10,6,0.95);
+  background: linear-gradient(180deg, rgba(245,212,122,0.96), rgba(190,150,70,0.96));
+  border: 1px solid rgba(255,255,255,0.10);
+
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+/* List */
+.list{
+  margin: 0;
+  padding: 10px 0 0;
+  list-style: none;
+
+  display: grid;
+  gap: 8px;
+
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.listItem{
+  display:grid;
+  grid-template-columns: 16px 1fr;
+  gap: 10px;
+  align-items: start;
+
+  color: rgba(255,255,255,0.78);
+  font-size: 13px;
+  line-height: 1.36;
+}
+
+.check{
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  display:grid;
+  place-items:center;
+
+  background: rgba(12, 40, 26, 0.42);
+  border: 1px solid rgba(80, 220, 150, 0.16);
+  color: rgba(170, 255, 215, 0.92);
+}
+
+/* Stack inside card */
+.stackRow{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+
+  display:flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stackPill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.72);
+
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.07);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+.card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.03) 0%,
+      rgba(255,255,255,0.01) 10%,
+      transparent 24%
+    ),
+    linear-gradient(
+      180deg,
+      #0e0f13 0%,
+      #090a0d 55%,
+      #06070a 100%
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.035),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+
+  transition:
+    border-color .26s ease,
+    box-shadow .26s ease,
+    transform .26s ease;
+}
+
+/* matte top edge */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.065) 0%,
+      rgba(255,255,255,0.018) 12%,
+      transparent 28%
+    );
+
+  opacity: .88;
+}
+
+/* silver sweep */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    118deg,
+    transparent 0%,
+    rgba(255,255,255,0) 36%,
+    rgba(255,255,255,0.05) 46%,
+    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0.05) 54%,
+    transparent 66%
+  );
+
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateX(-28%);
+  transition:
+    opacity .2s ease,
+    transform .58s cubic-bezier(.22,.61,.36,1);
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.18);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.045),
+    inset 0 0 0 1px rgba(255,255,255,0.025);
+}
+
+.card:hover::after,
+.card:focus-within::after {
+  opacity: 1;
+  transform: translateX(14%);
+}
+
+/* featured card */
+.featured {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  border: 1px solid rgba(255, 208, 110, 0.44);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,230,165,0.05) 0%,
+      rgba(255,220,130,0.015) 10%,
+      transparent 24%
+    ),
+    linear-gradient(
+      180deg,
+      #100f12 0%,
+      #0a090c 55%,
+      #060609 100%
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,235,180,0.04),
+    inset 0 0 0 1px rgba(255,210,120,0.03),
+    0 0 18px rgba(255,196,90,0.10);
+}
+
+.featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,236,185,0.10) 0%,
+      rgba(255,220,140,0.022) 12%,
+      transparent 28%
+    );
+
+  opacity: .9;
+}
+
+/* gold sweep */
+.featured::after {
+  content: "";
+  position: absolute;
+  inset: -26%;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    rgba(255,235,170,0.12) 47%,
+    rgba(255,220,120,0.56) 50%,
+    rgba(255,235,170,0.12) 53%,
+    transparent 58%
+  );
+
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateX(-34%);
+  transition:
+    opacity .2s ease,
+    transform .78s cubic-bezier(.22,.61,.36,1);
+}
+
+.featured:hover,
+.featured:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(255, 218, 130, 0.72);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,240,195,0.05),
+    inset 0 0 0 1px rgba(255,220,130,0.04),
+    0 0 22px rgba(255,205,110,0.16);
+}
+
+.featured:hover::after,
+.featured:focus-within::after {
+  opacity: 1;
+  transform: translateX(18%);
+}
+
+.cardInner {
+  position: relative;
+  z-index: 2;
+  padding: 22px 22px 18px;
+}
+
+.cardHead {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+
+/* Footer */
+.cardFoot{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 14px;
+
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footHint{
+  color: rgba(255,255,255,0.46);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Detail button — featured (gold accent), others (silver) */
+.detailBtn{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+
+  border: 0;
+  background: transparent;
+  padding: 6px 8px;
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  user-select: none;
+
+  color: rgba(255,255,255,0.78);
+  opacity: .9;
+
+  transition: opacity 180ms ease, transform 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.detailBtn:hover{
+  opacity: 1;
+  transform: translateX(1px);
+  color: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.04);
+}
+
+.detailBtnGold{
+  color: rgba(245, 203, 92, 0.95);
+}
+
+.detailBtnGold:hover{
+  color: rgba(245, 203, 92, 1);
+  background: rgba(245,203,92,0.06);
+}
+
+
+
+.featured .stackPill{
+  border-color: rgba(216,178,92,0.18);
+  background: rgba(245,203,92,0.06);
+  color: rgba(255,255,255,0.78);
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .card,
+  .card::after{
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Опускаем чип Služby */
+:global(.lx-section--services .lx-eyebrow){
+  margin-top: 25px;   /* регулируй 12–24px */
+}
+
