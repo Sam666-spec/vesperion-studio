@@ -27,7 +27,7 @@ const plans: Plan[] = [
     badge: "Základ",
     eyebrow: "Rychlý vstup",
     name: "Start",
-    price: "13 000 Kč",
+    price: "15 000 Kč",
     description:
       "Čistý konverzní základ pro menší službu nebo jednu hlavní nabídku. Rychlé dodání, jasná struktura a profesionální prezentace bez zbytečného balastu.",
     delivery: "7–14 dní",
@@ -47,7 +47,7 @@ const plans: Plan[] = [
     badge: "Nejčastější volba",
     eyebrow: "Nejlepší poměr výkon / cena",
     name: "Growth",
-    price: "30 000 Kč",
+    price: "25 000 Kč",
     description:
       "Varianta pro firmy, které chtějí web jako reálný obchodní nástroj. Lepší UX, silnější struktura, kvalitnější copy a základ pro růst i měření výsledků.",
     delivery: "10–21 dní",
@@ -69,7 +69,7 @@ const plans: Plan[] = [
     badge: "Platinum",
     eyebrow: "Brand + výkon + strategie",
     name: "Premium",
-    price: "55 000 Kč",
+    price: "50 000 Kč",
     description:
       "Prémiové řešení pro značky, které chtějí výrazný výstup, strategické vedení a web postavený na výkonu, důvěře a dlouhodobém růstu.",
     delivery: "3–5 týdnů",
