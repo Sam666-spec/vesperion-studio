@@ -1385,3 +1385,10 @@ text-align:center;
     line-height: 1.7;
   }
 }
+
+@media (max-width: 1000px){
+  .stage{
+    padding-left: 2px;
+    padding-right: 6px;
+  }
+}
