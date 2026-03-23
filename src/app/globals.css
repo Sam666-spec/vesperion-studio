@@ -695,6 +695,7 @@ body.lx-lock{ overflow: hidden; }
 
 .lx-hero .lx-hero-inner {
   max-width: 980px;
+  min-width: 0;
 }
 
 .lx-h1 {
@@ -718,6 +719,7 @@ body.lx-lock{ overflow: hidden; }
   .lx-hero {
     padding-top: 86px;
   }
+
   .lx-h1 {
     line-height: 1.02;
     font-size: clamp(34px, 9vw, 52px);
@@ -725,229 +727,194 @@ body.lx-lock{ overflow: hidden; }
 }
 
 /* ===== HERO LUX LAYOUT ===== */
-.lx-hero-grid{
-  display:grid;
-  grid-template-columns: 1.35fr 0.65fr;
+.lx-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
   gap: 28px;
   align-items: start;
+  min-width: 0;
 }
 
-.lx-hero-cta{
-  display:flex;
-  gap:10px;
-  margin-top:22px;
-  flex-wrap:wrap;
+.lx-hero-cta {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  flex-wrap: wrap;
 }
 
-.lx-hero-badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:16px;
-  align-items:center;
+.lx-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  align-items: center;
+  min-width: 0;
 }
 
 /* badge pill (studio dark glass) */
-.lx-hero-badges .lx-chip{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-
-  padding:7px 12px;
-  border-radius:999px;
-
-  font-size:12px;
-  line-height:1;
-  letter-spacing:.01em;
-
-  color: rgba(255,255,255,.82);
-
+.lx-hero-badges .lx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.82);
   background:
-    radial-gradient(140px 60px at 20% 25%, rgba(255,255,255,.06), transparent 62%),
-    linear-gradient(180deg, rgba(18,18,22,.72), rgba(12,12,16,.72));
-
-  border: 1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06);
-
+    radial-gradient(140px 60px at 20% 25%, rgba(255, 255, 255, 0.06), transparent 62%),
+    linear-gradient(180deg, rgba(18, 18, 22, 0.72), rgba(12, 12, 16, 0.72));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
   transition:
-    transform .18s ease,
-    border-color .18s ease,
-    box-shadow .18s ease,
-    background .18s ease,
-    color .18s ease;
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
 }
 
-.lx-hero-badges .lx-chip:hover{
+.lx-hero-badges .lx-chip:hover {
   transform: translateY(-1px);
-  color: rgba(255,255,255,.92);
-
-  border-color: rgba(255,255,255,.14);
-
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.14);
   background:
-    radial-gradient(160px 70px at 20% 25%, rgba(255,255,255,.075), transparent 62%),
-    linear-gradient(180deg, rgba(22,22,28,.76), rgba(12,12,16,.74));
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.075);
+    radial-gradient(160px 70px at 20% 25%, rgba(255, 255, 255, 0.075), transparent 62%),
+    linear-gradient(180deg, rgba(22, 22, 28, 0.76), rgba(12, 12, 16, 0.74));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.075);
 }
 
-.lx-hero-badges .lx-chip:active{
-  transform: translateY(0px);
+.lx-hero-badges .lx-chip:active {
+  transform: translateY(0);
 }
 
 /* dot inside chip */
-.lx-dot{
-  width:8px;
-  height:8px;
-  border-radius:999px;
-
-  display:inline-block;
-  flex:0 0 8px;
-
+.lx-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  display: inline-block;
+  flex: 0 0 8px;
   transform: translateY(-0.5px);
   box-shadow:
-    0 0 0 2px rgba(0,0,0,.35),
-    0 0 10px rgba(0,0,0,.35);
+    0 0 0 2px rgba(0, 0, 0, 0.35),
+    0 0 10px rgba(0, 0, 0, 0.35);
 }
 
-/* states */
-.lx-dot--good{
-  /* deep emerald (not neon) */
-  background: rgba(31,143,99,.95);
+.lx-dot--good {
+  background: rgba(31, 143, 99, 0.95);
   box-shadow:
-    0 0 0 2px rgba(0,0,0,.35),
-    0 0 10px rgba(31,143,99,.28);
+    0 0 0 2px rgba(0, 0, 0, 0.35),
+    0 0 10px rgba(31, 143, 99, 0.28);
 }
 
-/* if you still need "gold" state somewhere, make it premium but muted */
-.lx-dot--gold{
-  background: rgba(200,170,95,.92);
+.lx-dot--gold {
+  background: rgba(200, 170, 95, 0.92);
   box-shadow:
-    0 0 0 2px rgba(0,0,0,.35),
-    0 0 10px rgba(200,170,95,.22);
+    0 0 0 2px rgba(0, 0, 0, 0.35),
+    0 0 10px rgba(200, 170, 95, 0.22);
 }
 
 /* =========================
    HERO CARD (Premium Glass)
    ========================= */
 
-/* =========================================================
-   HERO RIGHT CARD — LUX BLACK GLASS (senior-grade)
-   (drop-in replacement for your current block)
-   ========================================================= */
-
-.lx-hero-card{
+.lx-hero-card {
   position: relative;
   border-radius: 22px;
   padding: 22px;
   overflow: hidden;
+  min-width: 0;
+  width: 100%;
 
-  /* base */
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
-  /* premium black glass — NO gold lamp */
   background:
-    /* subtle top-left sheen */
-    radial-gradient(900px 520px at 18% 12%, rgba(255,255,255,.055), transparent 58%),
-    /* subtle bottom-center depth */
-    radial-gradient(800px 520px at 55% 110%, rgba(0,0,0,.55), transparent 60%),
-    /* deep glass body */
-    linear-gradient(180deg, rgba(14,16,22,.86) 0%, rgba(8,9,12,.80) 100%);
+    radial-gradient(900px 520px at 18% 12%, rgba(255, 255, 255, 0.055), transparent 58%),
+    radial-gradient(800px 520px at 55% 110%, rgba(0, 0, 0, 0.55), transparent 60%),
+    linear-gradient(180deg, rgba(14, 16, 22, 0.86) 0%, rgba(8, 9, 12, 0.8) 100%);
 
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
 
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
   will-change: transform;
   transform: translateZ(0);
-  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
-/* inner highlight + edge */
-.lx-hero-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
+.lx-hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   border-radius: 22px;
-  pointer-events:none;
-
-  /* expensive edge gradient */
-  background: linear-gradient(135deg,
-    rgba(255,255,255,.18),
-    rgba(255,255,255,.06) 35%,
-    rgba(255,255,255,.02) 60%,
-    rgba(255,255,255,.10)
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.06) 35%,
+    rgba(255, 255, 255, 0.02) 60%,
+    rgba(255, 255, 255, 0.1)
   );
-
-  /* show only border ring */
   padding: 1px;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-
-  opacity: .55;
+  opacity: 0.55;
 }
 
-/* soft specular sweep (very subtle) */
-.lx-hero-card::after{
-  content:"";
-  position:absolute;
-  left:-35%;
-  top:-40%;
-  width: 70%;
-  height: 85%;
+.lx-hero-card::after {
+  content: "";
+  position: absolute;
+  left: -35%;
+  top: -40%;
+  width: 70%;height: 85%;
   transform: rotate(18deg);
-  pointer-events:none;
-
-  background: radial-gradient(closest-side,
-    rgba(255,255,255,.08),
-    transparent 70%
-  );
-  opacity: .22;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.08), transparent 70%);
+  opacity: 0.22;
   filter: blur(6px);
 }
 
-.lx-hero-card:hover{
+.lx-hero-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(255,255,255,.12);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* top row */
-.lx-hero-card-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+.lx-hero-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 14px;
+  min-width: 0;
 }
 
-.lx-hero-card-title{
+.lx-hero-card-title {
   font-weight: 700;
   font-size: 13px;
-  letter-spacing: .02em;
-  color: rgba(244,244,248,.92);
+  letter-spacing: 0.02em;
+  color: rgba(244, 244, 248, 0.92);
+  min-width: 0;
 }
 
 /* =========================
-   STATUS PILL (7–14 dní)
-   premium dark + muted green
+   STATUS PILL
    ========================= */
 
-.lx-hero-card-pill{
-  --g: 72, 196, 133; /* muted premium green */
+.lx-hero-card-pill {
+  --g: 72, 196, 133;
 
   position: relative;
   display: inline-flex;
   align-items: center;
+  flex: 0 0 auto;
 
   padding: 6px 14px 6px 28px;
   border-radius: 999px;
@@ -956,25 +923,25 @@ body.lx-lock{ overflow: hidden; }
   font-weight: 550;
   white-space: nowrap;
 
-  color: rgba(220,255,236,.92);
+  color: rgba(220, 255, 236, 0.92);
 
-  border: 1px solid rgba(var(--g), .22);
+  border: 1px solid rgba(var(--g), 0.22);
 
   background:
-    radial-gradient(140px 70px at 20% 10%, rgba(255,255,255,.06), transparent 60%),
-    linear-gradient(180deg, rgba(12,14,18,.78), rgba(9,10,13,.78));
+    radial-gradient(140px 70px at 20% 10%, rgba(255, 255, 255, 0.06), transparent 60%),
+    linear-gradient(180deg, rgba(12, 14, 18, 0.78), rgba(9, 10, 13, 0.78));
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    0 0 0 1px rgba(var(--g), .06);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(var(--g), 0.06);
 
-  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.lx-hero-card-pill::before{
+.lx-hero-card-pill::before {
   content: "";
   position: absolute;
   left: 10px;
@@ -983,16 +950,13 @@ body.lx-lock{ overflow: hidden; }
   height: 8px;
   border-radius: 999px;
   transform: translateY(-50%);
-
   background: rgb(var(--g));
-
   box-shadow:
-    0 0 0 3px rgba(var(--g), .14),
-    0 0 14px rgba(var(--g), .28);
+    0 0 0 3px rgba(var(--g), 0.14),
+    0 0 14px rgba(var(--g), 0.28);
 }
 
-/* subtle “breath”, not neon */
-.lx-hero-card-pill::after{
+.lx-hero-card-pill::after {
   content: "";
   position: absolute;
   left: 10px;
@@ -1001,182 +965,189 @@ body.lx-lock{ overflow: hidden; }
   height: 8px;
   border-radius: 999px;
   transform: translateY(-50%);
-  box-shadow: 0 0 10px rgba(var(--g), .25);
+  box-shadow: 0 0 10px rgba(var(--g), 0.25);
   opacity: 0;
   animation: lx-pulse 2.2s ease-in-out infinite;
 }
 
-@keyframes lx-pulse{
-  0%, 100% { opacity: 0; transform: translateY(-50%) scale(1); }
-  50% { opacity: .45; transform: translateY(-50%) scale(1.22); }
+@keyframes lx-pulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: translateY(-50%) scale(1.22);
+  }
 }
 
-.lx-hero-card-pill:hover{transform: translateY(-1px);
-  border-color: rgba(var(--g), .38);
+.lx-hero-card-pill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(var(--g), 0.38);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    0 0 0 1px rgba(var(--g), .10);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(var(--g), 0.1);
 }
 
 /* reduce motion */
-@media (prefers-reduced-motion: reduce){
+@media (prefers-reduced-motion: reduce) {
   .lx-hero-card,
-  .lx-hero-card *{
+  .lx-hero-card * {
     animation: none !important;
     transition: none !important;
   }
 }
+
 /* =========================
    METRICS GRID
    ========================= */
 
-.lx-hero-metrics{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
+.lx-hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin-bottom: 14px;
+  min-width: 0;
 }
 
-.lx-metric{
+.lx-metric {
   border-radius: 16px;
   padding: 12px;
-  border: 1px solid rgba(255,255,255,.085);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  min-width: 0;
 
   background:
-    radial-gradient(160px 80px at 30% 20%, rgba(255,255,255,.06), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+    radial-gradient(160px 80px at 30% 20%, rgba(255, 255, 255, 0.06), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03));
 
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.lx-metric-kpi{
+.lx-metric-kpi {
   font-weight: 800;
   font-size: 18px;
   line-height: 1.05;
-  color: rgba(255,255,255,.95);
+  color: rgba(255, 255, 255, 0.95);
 }
 
-.lx-metric-label{
+.lx-metric-label {
   margin-top: 3px;
   font-size: 12px;
-  color: rgba(244,244,248,.72);
+  color: rgba(244, 244, 248, 0.72);
 }
 
 /* =========================
-   TECH STACK CHIPS (only inside hero card)
+   TECH STACK CHIPS
    ========================= */
 
-.lx-hero-stack{
-  display:flex;
-  flex-wrap:wrap;
+.lx-hero-stack {
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 6px;
   margin-bottom: 14px;
+  min-width: 0;
 }
 
-.lx-hero-card .lx-hero-stack .lx-chip{
+.lx-hero-card .lx-hero-stack .lx-chip {
   position: relative;
   padding: 7px 14px;
   border-radius: 999px;
-
   font-size: 13px;
   font-weight: 500;
-
-  color: rgba(244,244,248,.90);
+  color: rgba(244, 244, 248, 0.9);
 
   background:
-    radial-gradient(140px 70px at 35% 10%, rgba(255,255,255,.06), transparent 60%),
-    linear-gradient(180deg, rgba(18,22,30,.82), rgba(10,12,18,.82));
+    radial-gradient(140px 70px at 35% 10%, rgba(255, 255, 255, 0.06), transparent 60%),
+    linear-gradient(180deg, rgba(18, 22, 30, 0.82), rgba(10, 12, 18, 0.82));
 
-  border: 1px solid rgba(255,255,255,.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    0 10px 22px rgba(0,0,0,.22);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),0 10px 22px rgba(0, 0, 0, 0.22);
 
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* тонкая рамка у чипов */
-.lx-hero-card .lx-hero-stack .lx-chip::before{
+.lx-hero-card .lx-hero-stack .lx-chip::before {
   content: "";
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(135deg,
-    rgba(245,212,122,.28),
-    rgba(255,255,255,.10),
-    rgba(245,212,122,.14)
+  background: linear-gradient(
+    135deg,
+    rgba(245, 212, 122, 0.28),
+    rgba(255, 255, 255, 0.1),
+    rgba(245, 212, 122, 0.14)
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   padding: 1px;
-  opacity: .35;
+  opacity: 0.35;
   pointer-events: none;
 }
 
-/* первые чипы чуть “сильнее” */
-.lx-hero-card .lx-hero-stack .lx-chip:nth-child(-n+6){
-  border-color: rgba(245,212,122,.20);
+.lx-hero-card .lx-hero-stack .lx-chip:nth-child(-n + 6) {
+  border-color: rgba(245, 212, 122, 0.2);
   background:
-    radial-gradient(160px 80px at 35% 10%, rgba(245,212,122,.10), transparent 60%),
-    linear-gradient(180deg, rgba(18,22,30,.78), rgba(10,12,18,.78));
+    radial-gradient(160px 80px at 35% 10%, rgba(245, 212, 122, 0.1), transparent 60%),
+    linear-gradient(180deg, rgba(18, 22, 30, 0.78), rgba(10, 12, 18, 0.78));
 }
 
-.lx-hero-card .lx-hero-stack .lx-chip:hover{
+.lx-hero-card .lx-hero-stack .lx-chip:hover {
   transform: translateY(-2px);
-  border-color: rgba(245,212,122,.26);
+  border-color: rgba(245, 212, 122, 0.26);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    0 16px 30px rgba(0,0,0,.32),
-    0 0 18px rgba(245,212,122,.10);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 16px 30px rgba(0, 0, 0, 0.32),
+    0 0 18px rgba(245, 212, 122, 0.1);
 }
 
 /* =========================
-   HERO TOP CHIP (Premium web / UX/UI / výkon / SEO)
+   HERO TOP CHIP
    ========================= */
 
-/* базовый чип (если используешь и в других местах — ок) */
-.lx-chip{
+.lx-chip {
   display: inline-flex;
-  align-items: center;   /* <-- ключевое */
+  align-items: center;
   gap: 10px;
   padding: 7px 12px;
   border-radius: 999px;
-
   font-size: 12px;
-  line-height: 1;        /* <-- ключевое */
-  color: rgba(255,255,255,.78);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.78);
 
-  background: linear-gradient(180deg,
-    rgba(255,255,255,.06),
-    rgba(255,255,255,.02)
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
   );
 
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
-  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.lx-chip:hover{
+.lx-chip:hover {
   transform: translateY(-1px);
-  border-color: rgba(245,212,122,.28);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.07);
+  border-color: rgba(245, 212, 122, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
-
-/* конкретно хиро-чип */
-.lx-chip.lx-chip-hero{
+.lx-chip.lx-chip-hero {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  min-width: 0;
+  width: fit-content;
   line-height: 1;
   gap: 14px;
 
@@ -1184,82 +1155,72 @@ body.lx-lock{ overflow: hidden; }
   border-radius: 999px;
 
   font-size: 12px;
-  letter-spacing: .12em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 
-  color: rgba(255,255,255,.72);
+  color: rgba(255, 255, 255, 0.72);
 
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-  border: 1px solid rgba(245,212,122,.25);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(245, 212, 122, 0.25);
 
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
-  transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* hover */
-.lx-chip.lx-chip-hero:hover{
-  border-color: rgba(245,212,122,.45);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08);
+.lx-chip.lx-chip-hero:hover {
+  border-color: rgba(245, 212, 122, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* акцентный текст (Premium web) — КЛЮЧЕВО для фикса "упавшего" первого кружка */
-.lx-chip-hero-accent{
-  display: inline-flex;     /* ключ */
-  align-items: center;      /* ключ */
-  line-height: 1;           /* ключ */
-
-  color: rgba(245,212,122,.95);
-  text-shadow: 0 0 14px rgba(245,212,122,.25);
+.lx-chip-hero-accent {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  flex: 0 0 auto;
+  color: rgba(245, 212, 122, 0.95);
+  text-shadow: 0 0 14px rgba(245, 212, 122, 0.25);
 }
 
 /* =========================
-   SEPARATOR DOT (base)
+   SEPARATOR DOT
    ========================= */
-.lx-sep{
+
+.lx-sep {
   display: inline-block;
   width: 4px;
   height: 4px;
   margin: 0 12px;
-
   border-radius: 999px;
-
-  background: rgba(255,255,255,.22);
-  box-shadow: 0 0 0 3px rgba(255,255,255,.06);
-
-  vertical-align: middle; /* важно */
-  flex: 0 0 auto;         /* важно */
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+  vertical-align: middle;
+  flex: 0 0 auto;
   transform: none;
 }
 
-/* separator dot inside hero chip (premium gold) */
-.lx-chip-hero .lx-sep{
+.lx-chip-hero .lx-sep {
   width: 4px;
   height: 4px;
   margin: 0 12px;
-
-  background: rgba(245,212,122,.65);
-  box-shadow: 0 0 0 4px rgba(245,212,122,.08);
-
+  background: rgba(245, 212, 122, 0.65);
+  box-shadow: 0 0 0 4px rgba(245, 212, 122, 0.08);
   vertical-align: middle;
 }
-
 
 /* =========================
    CTA area
    ========================= */
 
-.lx-hero-card-btn{
-  display:flex;
-  justify-content:flex-start;
+.lx-hero-card-btn {
+  display: flex;
+  justify-content: flex-start;
 }
 
-.lx-hero-card-btn .lx-btn{
+.lx-hero-card-btn .lx-btn {
   width: 100%;
   justify-content: center;
 }
@@ -1268,18 +1229,74 @@ body.lx-lock{ overflow: hidden; }
    MOBILE
    ========================= */
 
-@media (max-width: 900px){
-  .lx-hero-metrics{ grid-template-columns: 1fr; }
-
-  .lx-hero-grid{
-    grid-template-columns: 1fr !important;
+@media (max-width: 900px) {
+  .lx-hero__content {
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
   }
 
-  .lx-hero-card{
-    justify-self: center;
-    width: min(100%, 420px);
-    margin-inline: auto;
+  .lx-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+    justify-items: stretch;
+  }
+
+  .lx-hero-inner {width: 100%;
+    min-width: 0;
+  }
+
+  .lx-chip.lx-chip-hero {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .lx-chip.lx-chip-hero::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lx-h1,
+  .lx-lead,
+  .lx-hero-cta,
+  .lx-hero-badges {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .lx-hero-badges {
+    gap: 10px;
+  }
+
+  .lx-hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .lx-hero-card {
+    justify-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: 0;
     transform: none !important;
+  }
+
+  .lx-hero-card-top {
+    align-items: flex-start;
+  }
+
+  .lx-hero-card-title {
+    font-size: 12px;
+  }
+
+  .lx-hero-card-pill {
+    font-size: 12px;
   }
 }
 
