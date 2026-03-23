@@ -1359,20 +1359,29 @@ text-align:center;
 
 }
 
-/* ===== MOBILE FIX: CENTER ===== */
 @media (max-width: 1000px){
-
-  .stage{
-    width: min(100%, calc(100vw - 32px));
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
+  .section,
+  .stage,
+  .grid,
   .card{
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
+  .priceBox{
+    padding-left: 8px;
+  }
+
+  .price{
+    font-size: 20px;
+  }
+
+  .planName{
+    font-size: 24px;
+  }
+
+  .planDesc{
+    font-size: 13px;
+    line-height: 1.7;
+  }
 }
