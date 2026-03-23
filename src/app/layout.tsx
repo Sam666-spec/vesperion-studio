@@ -130,7 +130,7 @@ const organizationSchema = {
   image: `${siteUrl}/logo.png`,
   description: siteDescription,
   sameAs: [
-    "https://www.instagram.com/vesperionstudio",
+    "https://www.instagram.com/vesperionstudio.cz",
     "https://www.linkedin.com/company/vesperionstudio",
   ],
   contactPoint: [

@@ -54,7 +54,7 @@ const LINKS: ContactLink[] = [
   {
     label: "Instagram",
     value: "@vesperionstudio",
-    href: "https://www.instagram.com/vesperionstudio",
+    href: "https://www.instagram.com/vesperionstudio.cz",
     hint: "Ukázky a backstage",
     icon: "instagram",
     type: "instagram",

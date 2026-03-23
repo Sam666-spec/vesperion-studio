@@ -6,7 +6,10 @@
   position: relative;
   overflow: hidden;
   scroll-margin-top: 180px;
-  padding: 140px 0 112px;
+  padding-top: 140px;
+  padding-bottom: 112px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
 }
 
 /* ===== Header ===== */
@@ -1328,4 +1331,30 @@ margin-top:10px;
 font-size:12px;
 color:rgba(255,255,255,0.5);
 text-align:center;
+}
+
+/* ===== MOBILE FIX: SPACING ===== */
+@media (max-width: 1000px){
+
+  .section{
+    padding-top: 108px;
+    padding-bottom: 88px;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+
+  .stage{
+    margin-top: 40px;
+  }
+
+  .grid{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card{
+    padding: 18px;
+    border-radius: 22px;
+  }
+
 }
