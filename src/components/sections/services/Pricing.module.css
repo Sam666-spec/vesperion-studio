@@ -1333,18 +1333,29 @@ color:rgba(255,255,255,0.5);
 text-align:center;
 }
 
-/* ===== MOBILE FIX: SPACING ===== */
-@media (max-width: 1000px){
+.pricingContainer{
+  position: relative;
+  z-index: 2;
+}
 
+/* ===== MOBILE FIX: PRICING ===== */
+@media (max-width: 1000px){
   .section{
     padding-top: 108px;
     padding-bottom: 88px;
-    padding-left: max(16px, env(safe-area-inset-left));
-    padding-right: max(16px, env(safe-area-inset-right));
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .pricingContainer{
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
   }
 
   .stage{
     margin-top: 40px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .grid{
@@ -1353,17 +1364,14 @@ text-align:center;
   }
 
   .card{
+    box-sizing: border-box;
+    min-width: 0;
     padding: 18px;
     border-radius: 22px;
   }
 
-}
-
-@media (max-width: 1000px){
-  .section,
   .stage,
-  .grid,
-  .card{
+  .grid{
     box-sizing: border-box;
     min-width: 0;
   }
@@ -1383,12 +1391,5 @@ text-align:center;
   .planDesc{
     font-size: 13px;
     line-height: 1.7;
-  }
-}
-
-@media (max-width: 1000px){
-  .stage{
-    padding-left: 2px;
-    padding-right: 6px;
   }
 }

@@ -116,7 +116,7 @@ export default function Pricing() {
         id="cenik"
         className={`${styles.section} lx-section--pricing`}
       >
-        <div className="lx-container">
+        <div className={`lx-container ${styles.pricingContainer}`}>
           <Reveal delayMs={0}>
             <header className={styles.head}>
               <div className={styles.eyebrow}>Ceník</div>
