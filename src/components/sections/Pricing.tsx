@@ -47,7 +47,7 @@ const plans: Plan[] = [
     badge: "Nejčastější volba",
     eyebrow: "Nejlepší poměr výkon / cena",
     name: "Growth",
-    price: "30000 Kč",
+    price: "30 000 Kč",
     description:
       "Varianta pro firmy, které chtějí web jako reálný obchodní nástroj. Lepší UX, silnější struktura, kvalitnější copy a základ pro růst i měření výsledků.",
     delivery: "10–21 dní",

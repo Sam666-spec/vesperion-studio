@@ -1358,3 +1358,21 @@ text-align:center;
   }
 
 }
+
+/* ===== MOBILE FIX: CENTER ===== */
+@media (max-width: 1000px){
+
+  .stage{
+    width: min(100%, calc(100vw - 32px));
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
