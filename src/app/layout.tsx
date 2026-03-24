@@ -7,60 +7,54 @@ import Footer from "@/components/layout/Footer";
 
 const siteUrl = "https://vesperionstudio.com";
 const siteName = "Vesperion Studio";
-const siteTitle = "Vesperion Studio — Premium Web Design & Development";
+const defaultTitle = "Premium Web Design & Development in Czechia | Vesperion Studio";
 const siteDescription =
-  "Vesperion Studio creates premium websites, modern web applications, and luxury digital experiences with high-end design, performance, and conversion-focused strategy.";
+  "Vesperion Studio designs and builds premium websites for businesses in Czechia. Fast performance, modern UX/UI, clean code, SEO foundations, and conversion-focused structure.";
 const ogImage = `${siteUrl}/og-image.jpg`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
 
   title: {
-    default: siteTitle,
+    default: defaultTitle,
     template: `%s | ${siteName}`,
   },
 
   description: siteDescription,
 
   applicationName: siteName,
-  generator: "Next.js",
   referrer: "origin-when-cross-origin",
 
   keywords: [
     "Vesperion Studio",
+    "web design Czechia",
+    "web design Prague",
     "premium web design",
-    "luxury web design",
-    "web development agency",
-    "next.js development",
-    "modern websites",
-    "high-end websites",
+    "web development Czech Republic",
+    "custom website development",
+    "Next.js development",
+    "UX UI design",
+    "SEO website development",
+    "business website design",
     "landing page development",
-    "business websites",
-    "custom website studio",
-    "web design studio",
-    "SEO web development",
-    "UI UX design",
-    "responsive websites",
-    "premium digital studio",
+    "modern websites",
+    "high-end web design",
   ],
 
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
   publisher: siteName,
-  category: "technology",
+  category: "business",
 
   alternates: {
-    canonical: "/",
-    languages: {
-      "en-US": "/",
-    },
+    canonical: siteUrl,
   },
 
   openGraph: {
     type: "website",
     url: siteUrl,
     siteName,
-    title: siteTitle,
+    title: defaultTitle,
     description: siteDescription,
     locale: "en_US",
     images: [
@@ -68,23 +62,21 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: `${siteName} — Premium Web Design & Development`,
+        alt: "Vesperion Studio - Premium Web Design & Development in Czechia",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: siteTitle,
+    title: defaultTitle,
     description: siteDescription,
-    creator: "@vesperionstudio",
     images: [ogImage],
   },
 
   robots: {
     index: true,
     follow: true,
-    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -105,18 +97,11 @@ export const metadata: Metadata = {
   },
 
   manifest: "/site.webmanifest",
-
-  other: {
-    "theme-color": "#000000",
-    "color-scheme": "dark",
-    "format-detection": "telephone=no, address=no, email=no",
-  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
   themeColor: "#000000",
   colorScheme: "dark",
 };
@@ -129,17 +114,10 @@ const organizationSchema = {
   logo: `${siteUrl}/logo.png`,
   image: `${siteUrl}/logo.png`,
   description: siteDescription,
+  email: "contact@vesperionstudio.com",
   sameAs: [
     "https://www.instagram.com/vesperionstudio.cz",
     "https://www.linkedin.com/company/vesperionstudio",
-  ],
-  contactPoint: [
-    {
-      "@type": "ContactPoint",
-      contactType: "customer support",
-      email: "contact@vesperionstudio.com",
-      availableLanguage: ["English", "Czech"],
-    },
   ],
 };
 
@@ -149,24 +127,38 @@ const websiteSchema = {
   name: siteName,
   url: siteUrl,
   description: siteDescription,
-  publisher: {
-    "@type": "Organization",
-    name: siteName,
-    url: siteUrl,
-  },
-  inLanguage: "en-US",
+  inLanguage: "en",
 };
 
-const localBusinessSchema = {
+const professionalServiceSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: siteName,
   url: siteUrl,
   image: `${siteUrl}/logo.png`,
   description: siteDescription,
-  areaServed: "Europe",
   email: "contact@vesperionstudio.com",
-  brand: siteName,
+  areaServed: [
+    {
+      "@type": "Country",
+      name: "Czechia",
+    },
+    {
+      "@type": "Country",
+      name: "Slovakia",
+    },
+    {
+      "@type": "Place",
+      name: "Europe",
+    },
+  ],
+  serviceType: [
+    "Web Design",
+    "Web Development",
+    "UX/UI Design",
+    "Landing Page Development",
+    "SEO Foundations",
+  ],
   priceRange: "$$",
 };
 
@@ -195,21 +187,15 @@ export default function RootLayout({
           }}
         />
         <Script
-          id="localbusiness-schema"
+          id="professionalservice-schema"
           type="application/ld+json"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessSchema),
+            __html: JSON.stringify(professionalServiceSchema),
           }}
         />
 
         <div className="relative min-h-screen bg-black text-white">
-          {/* 
-            ВАЖНО:
-            Не ставим overflow-hidden на body / html / главный wrapper,
-            иначе sticky navbar часто ломается.
-          */}
-
           <Navbar />
 
           <main id="top" className="relative min-h-screen">
