@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
 
-    // 🔥 Главная продающая страница
+    // 🔥 Основная продающая
     {
       url: `${siteUrl}/tvorba-webu`,
       lastModified,
@@ -22,7 +22,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
 
-    // 🔥 Services (самые важные для SEO)
+    // 🔥 Локальные страницы (ВАЖНО)
+    {
+      url: `${siteUrl}/tvorba-webu-praha`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/tvorba-webu-tabor`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+
+    // 🔥 Services
     {
       url: `${siteUrl}/services/web-design`,
       lastModified,
@@ -42,7 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
 
-    // 📄 Служебные страницы
+    // 📄 Служебные
     {
       url: `${siteUrl}/privacy`,
       lastModified,
