@@ -104,12 +104,12 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://t.me/vesperionstudio"
+                href="https://www.instagram.com/vesperionstudio.cz"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.link}
               >
-                Telegram
+                instagram
               </a>
             </div>
 
