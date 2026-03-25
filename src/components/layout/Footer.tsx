@@ -65,6 +65,15 @@ export default function Footer() {
               <Link href="/tvorba-webu" className={styles.link}>
                 Tvorba webů
               </Link>
+
+              {/* 🔥 ЛОКАЛЬНЫЕ СТРАНИЦЫ (SEO) */}
+              <Link href="/tvorba-webu-praha" className={styles.link}>
+                Tvorba webů Praha
+              </Link>
+              <Link href="/tvorba-webu-tabor" className={styles.link}>
+                Tvorba webů Tábor
+              </Link>
+
               <Link href="/services/web-design" className={styles.link}>
                 Webdesign
               </Link>
