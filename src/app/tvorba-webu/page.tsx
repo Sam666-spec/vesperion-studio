@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Tvorba webů na míru v Česku | Vesperion Studio",
+  title: "Tvorba webů na míru v Česku a Praze | Vesperion Studio",
   description:
-    "Navrhujeme a vytváříme moderní weby na míru pro firmy v Česku. Prémiový design, UX/UI, rychlost, výkon a SEO základy pro lepší viditelnost i konverze.",
+    "Navrhujeme a vytváříme moderní weby na míru pro firmy v Česku a Praze. Prémiový design, UX/UI, rychlost, výkon a SEO základy pro lepší viditelnost i konverze.",
 };
 
 export default function TvorbaWebuPage() {
   return (
-    <main className="min-h-screen bg-black text-white px-6 py-24">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-black text-white px-6 py-20">
+      <div className="max-w-5xl mx-auto">
         <p className="text-sm uppercase tracking-[0.2em] text-[#D4AF37] mb-4">
           Vesperion Studio
         </p>
@@ -24,7 +25,7 @@ export default function TvorbaWebuPage() {
           a strukturu, která podporuje důvěru i konverze.
         </p>
 
-       <div className="h-px w-full bg-linear-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-10" />
+        <div className="h-px w-full bg-linear-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-10" />
 
         <h2 className="text-2xl font-semibold mb-4">
           Moderní weby, které vypadají profesionálně a fungují
@@ -41,6 +42,17 @@ export default function TvorbaWebuPage() {
           Každý projekt stavíme tak, aby byl přehledný, responzivní a připravený
           na další růst. Důležitou součástí je také technický základ pro SEO,
           správná struktura obsahu a promyšlené rozvržení jednotlivých sekcí.
+        </p>
+
+        <h2 className="text-2xl font-semibold mb-4">
+          Tvorba webu Praha a moderní řešení pro firmy
+        </h2>
+
+        <p className="text-neutral-400 leading-8 mb-10">
+          Pomáháme firmám v Praze i po celé České republice vytvářet moderní weby,
+          které působí profesionálně a podporují růst podnikání. Pokud hledáte
+          tvorbu webu Praha nebo kvalitní webové stránky na míru v Česku,
+          důležitá je nejen vizuální stránka, ale i výkon, struktura a důvěra.
         </p>
 
         <h2 className="text-2xl font-semibold mb-4">
@@ -67,23 +79,65 @@ export default function TvorbaWebuPage() {
           řešení, tvorba na míru je správná cesta.
         </p>
 
+        <h2 className="text-2xl font-semibold mb-4">
+          Související služby
+        </h2>
+
+        <p className="text-neutral-400 leading-8 mb-6">
+          Tvorba webu na míru je nejefektivnější, když design, vývoj a SEO fungují
+          společně. Proto u nás navazuje webdesign, kvalitní vývoj a technická
+          připravenost pro vyhledávače.
+        </p>
+
+        <div className="flex flex-wrap gap-4 mb-12">
+          <Link
+            href="/services/web-design"
+            className="inline-flex items-center rounded-full border border-white/15 px-5 py-3 text-white hover:bg-white/5 transition"
+          >
+            Webdesign
+          </Link>
+
+          <Link
+            href="/services/web-development"
+            className="inline-flex items-center rounded-full border border-white/15 px-5 py-3 text-white hover:bg-white/5 transition"
+          >
+            Vývoj webu
+          </Link>
+
+          <Link
+            href="/services/seo"
+            className="inline-flex items-center rounded-full border border-white/15 px-5 py-3 text-white hover:bg-white/5 transition"
+          >
+            SEO služby
+          </Link>
+        </div>
+
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
           <h2 className="text-2xl font-semibold mb-4">
-            Hledáte moderní web v Česku?
+            Hledáte moderní web v Česku nebo Praze?
           </h2>
 
           <p className="text-neutral-300 leading-8 mb-6">
             Vesperion Studio navrhuje a vytváří weby, které kombinují prémiový
             vizuál, výkon a promyšlenou strukturu. Pokud chcete web na míru pro
-            svou firmu nebo službu, můžeme navrhnout řešení přesně podle vašich cílů.
+            svou firmu nebo službu, navrhneme řešení přesně podle vašich cílů.
           </p>
 
-          <a
-            href="/#kontakt"
-            className="inline-flex items-center rounded-full bg-[#D4AF37] px-6 py-3 text-black font-medium hover:opacity-90 transition"
-          >
-            Nezávazná poptávka
-          </a>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href="/#kontakt"
+              className="inline-flex items-center rounded-full bg-[#D4AF37] px-6 py-3 text-black font-medium hover:opacity-90 transition"
+            >
+              Nezávazná poptávka
+            </a>
+
+            <Link
+              href="/services/web-design"
+              className="inline-flex items-center rounded-full border border-white/15 px-6 py-3 text-white hover:bg-white/5 transition"
+            >
+              Zobrazit služby
+            </Link>
+          </div>
         </div>
       </div>
     </main>
