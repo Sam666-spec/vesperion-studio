@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     siteName,
     title: defaultTitle,
     description: siteDescription,
-    locale: "en_US",
+    locale: "cs_CZ",
     images: [
       {
         url: ogImage,
@@ -127,7 +127,7 @@ const websiteSchema = {
   name: siteName,
   url: siteUrl,
   description: siteDescription,
-  inLanguage: "en",
+  inLanguage: "cs",
 };
 
 const professionalServiceSchema = {
