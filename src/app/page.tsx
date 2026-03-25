@@ -22,49 +22,61 @@ export default function Page() {
       <Services />
 
       <section className="lx-section">
-        <div className="lx-shell">
-          <div className="mx-auto max-w-5xl rounded-[28px] border border-white/10 bg-white/3 px-6 py-8 md:px-8 md:py-10">
+  <div className="lx-shell">
 
-            <div className="mb-4 inline-flex items-center rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-[#D4AF37]">
-              Detail služeb
-            </div>
+    {/* 🔥 Divider сверху */}
+    <div className="h-px w-full bg-linear-to-r from-transparent via-[#D4AF37]/40 to-transparent mb-12" />
 
-            <h2 className="mb-4 text-2xl font-semibold text-white md:text-3xl">
-              Naše služby podrobně
-            </h2>
+    <div className="mx-auto max-w-5xl rounded-[28px] border border-white/10 bg-black/60 backdrop-blur-xl px-6 py-10 md:px-10 md:py-12 relative overflow-hidden">
 
-            <p className="mb-8 max-w-2xl text-sm leading-7 text-neutral-400 md:text-base">
-              Každá služba má vlastní detailní stránku, kde najdete více informací
-              o přístupu, technickém řešení a přínosu pro váš web i business.
-            </p>
+      {/* 🔥 subtle gold glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-20 left-1/2 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-[#D4AF37]/10 blur-[120px]" />
+      </div>
 
-            <div className="flex flex-wrap gap-4">
+      <div className="relative z-10">
 
-              <Link
-                href="/services/web-design"
-                className="inline-flex items-center rounded-full border border-white/12 bg-white/3 px-5 py-3 text-sm text-white transition hover:border-[#D4AF37]/35 hover:bg-white/5"
-              >
-                Webdesign
-              </Link>
-
-              <Link
-                href="/services/web-development"
-                className="inline-flex items-center rounded-full border border-white/12 bg-white/3 px-5 py-3 text-sm text-white transition hover:border-[#D4AF37]/35 hover:bg-white/5"
-              >
-                Vývoj webu
-              </Link>
-
-              <Link
-                href="/services/seo"
-                className="inline-flex items-center rounded-full border border-white/12 bg-white/3 px-5 py-3 text-sm text-white transition hover:border-[#D4AF37]/35 hover:bg-white/5"
-              >
-                SEO služby
-              </Link>
-
-            </div>
-          </div>
+        <div className="mb-4 inline-flex items-center rounded-full border border-[#D4AF37]/25 bg-[#D4AF37]/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-[#D4AF37]">
+          Detail služeb
         </div>
-      </section>
+
+        <h2 className="mb-4 text-2xl font-semibold text-white md:text-3xl">
+          Naše služby podrobně
+        </h2>
+
+        <p className="mb-8 max-w-2xl text-neutral-400 leading-7">
+          Každá služba má vlastní detailní stránku, kde najdete více informací
+          o přístupu, technickém řešení a přínosu pro váš web i business.
+        </p>
+
+        <div className="flex flex-wrap gap-4">
+
+          <Link
+            href="/services/web-design"
+            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:border-[#D4AF37]/40 hover:bg-white/10"
+          >
+            Webdesign
+          </Link>
+
+          <Link
+            href="/services/web-development"
+            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:border-[#D4AF37]/40 hover:bg-white/10"
+          >
+            Vývoj webu
+          </Link>
+
+          <Link
+            href="/services/seo"
+            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:border-[#D4AF37]/40 hover:bg-white/10"
+          >
+            SEO služby
+          </Link>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       <Process />
       <Reference />
