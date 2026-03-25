@@ -18,21 +18,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${siteUrl}/tvorba-webu`,
       lastModified,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.9,
     },
 
-    // 🔥 Локальные страницы (ВАЖНО)
+    // 🔥 Локальные страницы
     {
       url: `${siteUrl}/tvorba-webu-praha`,
       lastModified,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${siteUrl}/tvorba-webu-tabor`,
       lastModified,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.8,
     },
 
@@ -40,19 +40,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${siteUrl}/services/web-design`,
       lastModified,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteUrl}/services/web-development`,
       lastModified,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteUrl}/services/seo`,
       lastModified,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.8,
     },
 
