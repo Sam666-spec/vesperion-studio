@@ -124,12 +124,12 @@ export default function TvorbaWebuPage() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <a
+            <Link
               href="/#kontakt"
               className="inline-flex items-center rounded-full bg-[#D4AF37] px-6 py-3 text-black font-medium hover:opacity-90 transition"
             >
               Nezávazná poptávka
-            </a>
+            </Link>
 
             <Link
               href="/services/web-design"

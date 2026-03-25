@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Vývoj webů na míru | Vesperion Studio",
@@ -10,7 +11,6 @@ export default function WebDevelopmentPage() {
   return (
     <main className="min-h-screen bg-black text-white px-6 py-20">
       <div className="max-w-5xl mx-auto">
-
         <p className="text-sm uppercase tracking-[0.2em] text-[#D4AF37] mb-4">
           Vesperion Studio
         </p>
@@ -24,7 +24,7 @@ export default function WebDevelopmentPage() {
           které fungují spolehlivě a bez kompromisů.
         </p>
 
-      <div className="h-px w-full bg-linear-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-10" />
+        <div className="h-px w-full bg-linear-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-10" />
 
         <h2 className="text-2xl font-semibold mb-4">
           Výkon a kvalita
@@ -58,13 +58,13 @@ export default function WebDevelopmentPage() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <a href="#kontakt" className="lx-btn lx-btn--gold">
+            <Link href="/#kontakt" className="lx-btn lx-btn--gold">
               Nezávazná poptávka
-            </a>
+            </Link>
 
-            <a href="/services/seo" className="lx-btn lx-btn--ghost">
+            <Link href="/services/seo" className="lx-btn lx-btn--ghost">
               SEO služby
-            </a>
+            </Link>
           </div>
         </div>
       </div>

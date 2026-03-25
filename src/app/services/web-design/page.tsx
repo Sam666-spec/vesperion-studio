@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Webdesign na míru v Česku | Vesperion Studio",
@@ -10,7 +11,6 @@ export default function WebDesignPage() {
   return (
     <main className="min-h-screen bg-black text-white px-6 py-20">
       <div className="max-w-5xl mx-auto">
-
         <p className="text-sm uppercase tracking-[0.2em] text-[#D4AF37] mb-4">
           Vesperion Studio
         </p>
@@ -75,13 +75,13 @@ export default function WebDesignPage() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <a href="#kontakt" className="lx-btn lx-btn--gold">
+            <Link href="/#kontakt" className="lx-btn lx-btn--gold">
               Nezávazná poptávka
-            </a>
+            </Link>
 
-            <a href="/services/web-development" className="lx-btn lx-btn--ghost">
+            <Link href="/services/web-development" className="lx-btn lx-btn--ghost">
               Vývoj webu
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "SEO služby v Česku | Vesperion Studio",
@@ -24,7 +25,7 @@ export default function SEOPage() {
           rychlosti a technickým základům SEO.
         </p>
 
-       <div className="h-px w-full bg-linear-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-10" />
+        <div className="h-px w-full bg-linear-to-r from-transparent via-[#D4AF37]/50 to-transparent mb-10" />
 
         <h2 className="text-2xl font-semibold mb-4">
           Základy SEO
@@ -57,13 +58,13 @@ export default function SEOPage() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <a href="#kontakt" className="lx-btn lx-btn--gold">
+            <Link href="/#kontakt" className="lx-btn lx-btn--gold">
               Nezávazná poptávka
-            </a>
+            </Link>
 
-            <a href="/services/web-design" className="lx-btn lx-btn--ghost">
+            <Link href="/services/web-design" className="lx-btn lx-btn--ghost">
               Webdesign
-            </a>
+            </Link>
           </div>
         </div>
       </div>
