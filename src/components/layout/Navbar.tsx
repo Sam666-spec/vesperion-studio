@@ -1,28 +1,34 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import MobileMenu from "./MobileMenu";
 import LeadModal from "@/components/ui/LeadModal";
 
 const links = [
-  { href: "#sluzby", label: "Služby" },
-  { href: "#proces", label: "Proces" },
-  { href: "#reference", label: "Reference" },
-  { href: "#cenik", label: "Ceník" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#kontakt", label: "Kontakt" },
+  { id: "sluzby", label: "Služby" },
+  { id: "proces", label: "Proces" },
+  { id: "reference", label: "Reference" },
+  { id: "cenik", label: "Ceník" },
+  { id: "faq", label: "FAQ" },
+  { id: "kontakt", label: "Kontakt" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   const [open, setOpen] = useState(false);
   const [leadOpen, setLeadOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
   const [scrolled, setScrolled] = useState(false);
 
-  const sectionIds = useMemo(
-    () => links.map((l) => l.href.replace("#", "")),
-    []
-  );
+  const sectionIds = useMemo(() => links.map((l) => l.id), []);
+
+  const isHome = pathname === "/";
+
+  const buildHref = (id: string) => {
+    return isHome ? `#${id}` : `/#${id}`;
+  };
 
   useEffect(() => {
     document.body.classList.toggle("lx-lock", open);
@@ -37,6 +43,11 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    if (!isHome) {
+      setActiveId("");
+      return;
+    }
+
     const ids = ["top", ...sectionIds];
     const sections = ids
       .map((id) => document.getElementById(id))
@@ -51,15 +62,11 @@ export default function Navbar() {
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort(
-            (a, b) =>
-              (b.intersectionRatio ?? 0) -
-              (a.intersectionRatio ?? 0)
-          )[0];
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
 
         if (visible?.target) {
           const id = (visible.target as HTMLElement).id;
-          setActiveId(id);
+          setActiveId(id === "top" ? "" : id);
         }
       },
       {
@@ -71,17 +78,20 @@ export default function Navbar() {
 
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, [sectionIds]);
+  }, [isHome, sectionIds]);
 
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
-    href: string
+    id: string
   ) => {
+    if (!isHome) {
+      setOpen(false);
+      return;
+    }
+
     e.preventDefault();
 
-    const id = href.startsWith("#") ? href.slice(1) : href;
     const hash = `#${id}`;
-
     const el = document.getElementById(id);
 
     if (!el) {
@@ -90,14 +100,9 @@ export default function Navbar() {
       return;
     }
 
-    if (id === "top") {
-      setActiveId("");
-    } else {
-      setActiveId(id);
-    }
+    setActiveId(id === "top" ? "" : id);
 
     el.scrollIntoView({ behavior: "smooth", block: "start" });
-
     window.history.replaceState(null, "", hash);
 
     setOpen(false);
@@ -107,11 +112,10 @@ export default function Navbar() {
     <>
       <header className={`lx-header ${scrolled ? "is-scrolled" : ""}`}>
         <div className="lx-header__inner">
-
           <a
             className="lx-brand"
-            href="#top"
-            onClick={(e) => handleClick(e, "#top")}
+            href={isHome ? "#top" : "/#top"}
+            onClick={(e) => handleClick(e, "top")}
           >
             <span className="lx-brand__dot" />
             <span className="lx-brand_text">
@@ -121,15 +125,14 @@ export default function Navbar() {
 
           <nav className="lx-nav" aria-label="Primary">
             {links.map((l) => {
-              const id = l.href.replace("#", "");
-              const isActive = activeId === id;
+              const isActive = isHome && activeId === l.id;
 
               return (
                 <a
-                  key={l.href}
+                  key={l.id}
                   className={`lx-nav__link ${isActive ? "is-active" : ""}`}
-                  href={l.href}
-                  onClick={(e) => handleClick(e, l.href)}
+                  href={buildHref(l.id)}
+                  onClick={(e) => handleClick(e, l.id)}
                 >
                   {l.label}
                 </a>
@@ -146,9 +149,10 @@ export default function Navbar() {
               Nezávazná poptávka
             </button>
 
-            <a className="lx-btn lx-btn--ghost lx-btn--hero-dark"
-              href="#cenik"
-              onClick={(e) => handleClick(e, "#cenik")}
+            <a
+              className="lx-btn lx-btn--ghost lx-btn--hero-dark"
+              href={buildHref("cenik")}
+              onClick={(e) => handleClick(e, "cenik")}
             >
               Zobrazit ceny
             </a>
@@ -181,7 +185,10 @@ export default function Navbar() {
           setOpen(false);
           setLeadOpen(true);
         }}
-        links={links}
+        links={links.map((l) => ({
+          href: buildHref(l.id),
+          label: l.label,
+        }))}
       />
     </>
   );
