@@ -1,14 +1,21 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const sectionHref = (id: string) => {
+    return isHome ? `#${id}` : `/#${id}`;
+  };
+
   return (
     <footer className={styles.footer}>
       <div className="lx-container">
-
         <div className={styles.grid}>
-
           {/* Brand */}
           <div className={styles.brand}>
             <div className={styles.logoRow}>
@@ -26,12 +33,42 @@ export default function Footer() {
           <div className={styles.col}>
             <div className={styles.colTitle}>Navigace</div>
 
-            <a href="#sluzby" className={styles.link}>Služby</a>
-            <a href="#proces" className={styles.link}>Proces</a>
-            <a href="#reference" className={styles.link}>Reference</a>
-            <a href="#cenik" className={styles.link}>Ceník</a>
-            <a href="#faq" className={styles.link}>FAQ</a>
-            <a href="#kontakt" className={styles.link}>Kontakt</a>
+            <Link href={sectionHref("sluzby")} className={styles.link}>
+              Služby
+            </Link>
+            <Link href={sectionHref("proces")} className={styles.link}>
+              Proces
+            </Link>
+            <Link href={sectionHref("reference")} className={styles.link}>
+              Reference
+            </Link>
+            <Link href={sectionHref("cenik")} className={styles.link}>
+              Ceník
+            </Link>
+            <Link href={sectionHref("faq")} className={styles.link}>
+              FAQ
+            </Link>
+            <Link href={sectionHref("kontakt")} className={styles.link}>
+              Kontakt
+            </Link>
+          </div>
+
+          {/* Services */}
+          <div className={styles.col}>
+            <div className={styles.colTitle}>Služby</div>
+
+            <Link href="/tvorba-webu" className={styles.link}>
+              Tvorba webů
+            </Link>
+            <Link href="/services/web-design" className={styles.link}>
+              Webdesign
+            </Link>
+            <Link href="/services/web-development" className={styles.link}>
+              Vývoj webu
+            </Link>
+            <Link href="/services/seo" className={styles.link}>
+              SEO služby
+            </Link>
           </div>
 
           {/* Contact */}
@@ -73,29 +110,25 @@ export default function Footer() {
               navrhneme možné řešení.
             </p>
 
-            <a href="#kontakt" className="lx-btn lx-btn--gold">
+            <Link href={sectionHref("kontakt")} className="lx-btn lx-btn--gold">
               Napsat zprávu →
-            </a>
+            </Link>
           </div>
-
         </div>
 
         {/* bottom */}
         <div className={styles.bottom}>
-
           <div className={styles.copy}>
             © {new Date().getFullYear()} Vesperion Studio ·
             IČO: XXXXXXXX · Tábor, Česká republika
           </div>
 
           <div className={styles.legal}>
-            <a href="/privacy">Ochrana Osobních údajů</a>
-            <a href="/cookies">Používání Cookies</a>
+            <Link href="/privacy">Ochrana osobních údajů</Link>
+            <Link href="/cookies">Používání cookies</Link>
             <span>Moderní weby pro Česko</span>
           </div>
-
         </div>
-
       </div>
     </footer>
   );
